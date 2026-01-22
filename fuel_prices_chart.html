@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Цены на ГСМ в Кыргызской Республике | 15-21 января 2026</title>
+    <meta name="description" content="Динамика цен на бензин и дизельное топливо в Кыргызской Республике с 15 по 21 января 2026 года">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            min-height: 100vh;
+            color: #ffffff;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #00d4ff, #7c3aed, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.1rem;
+        }
+
+        .chart-container {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 30px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            margin-bottom: 30px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 450px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            padding: 24px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            border-radius: 16px 16px 0 0;
+        }
+
+        .stat-card.a95::before {
+            background: linear-gradient(90deg, #f472b6, #ec4899);
+        }
+
+        .stat-card.a92::before {
+            background: linear-gradient(90deg, #60a5fa, #3b82f6);
+        }
+
+        .stat-card.diesel::before {
+            background: linear-gradient(90deg, #4ade80, #22c55e);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .stat-card h3 {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .stat-value {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .stat-value .current {
+            font-size: 2.2rem;
+            font-weight: 700;
+        }
+
+        .stat-card.a95 .current {
+            color: #f472b6;
+        }
+
+        .stat-card.a92 .current {
+            color: #60a5fa;
+        }
+
+        .stat-card.diesel .current {
+            color: #4ade80;
+        }
+
+        .stat-value .unit {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .stat-change {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .stat-change.negative {
+            background: rgba(34, 197, 94, 0.15);
+            color: #4ade80;
+        }
+
+        .stat-change.positive {
+            background: rgba(239, 68, 68, 0.15);
+            color: #f87171;
+        }
+
+        .legend-custom {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .legend-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: scale(1.05);
+        }
+
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+        }
+
+        .legend-color.a95 {
+            background: linear-gradient(135deg, #f472b6, #ec4899);
+        }
+
+        .legend-color.a92 {
+            background: linear-gradient(135deg, #60a5fa, #3b82f6);
+        }
+
+        .legend-color.diesel {
+            background: linear-gradient(135deg, #4ade80, #22c55e);
+        }
+
+        .legend-text {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .chart-container, .stat-card {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .stat-card:nth-child(1) { animation-delay: 0.1s; }
+        .stat-card:nth-child(2) { animation-delay: 0.2s; }
+        .stat-card:nth-child(3) { animation-delay: 0.3s; }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.6rem;
+            }
+            
+            .chart-wrapper {
+                height: 350px;
+            }
+            
+            .legend-custom {
+                gap: 15px;
+            }
+            
+            .legend-item {
+                padding: 8px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🛢️ Цены на ГСМ в Кыргызской Республике</h1>
+            <p>Динамика розничных цен с 15 по 21 января 2026 года (сом/литр)</p>
+        </header>
+
+        <div class="chart-container">
+            <div class="chart-wrapper">
+                <canvas id="fuelChart"></canvas>
+            </div>
+            <div class="legend-custom">
+                <div class="legend-item" onclick="toggleDataset(0)">
+                    <div class="legend-color a95"></div>
+                    <span class="legend-text">Бензин А-95</span>
+                </div>
+                <div class="legend-item" onclick="toggleDataset(1)">
+                    <div class="legend-color a92"></div>
+                    <span class="legend-text">Бензин А-92</span>
+                </div>
+                <div class="legend-item" onclick="toggleDataset(2)">
+                    <div class="legend-color diesel"></div>
+                    <span class="legend-text">Дизельное топливо</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card a95">
+                <h3>Бензин А-95</h3>
+                <div class="stat-value">
+                    <span class="current">79,49</span>
+                    <span class="unit">сом/литр</span>
+                </div>
+                <div class="stat-change negative">
+                    ↓ -1,34 сом (-1,66%)
+                </div>
+            </div>
+            <div class="stat-card a92">
+                <h3>Бензин А-92</h3>
+                <div class="stat-value">
+                    <span class="current">74,38</span>
+                    <span class="unit">сом/литр</span>
+                </div>
+                <div class="stat-change negative">
+                    ↓ -1,16 сом (-1,54%)
+                </div>
+            </div>
+            <div class="stat-card diesel">
+                <h3>Дизельное топливо</h3>
+                <div class="stat-value">
+                    <span class="current">78,86</span>
+                    <span class="unit">сом/литр</span>
+                </div>
+                <div class="stat-change negative">
+                    ↓ -1,40 сом (-1,74%)
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>Источник данных: Национальный статистический комитет Кыргызской Республики</p>
+        </footer>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('fuelChart').getContext('2d');
+        
+        const labels = ['15 янв', '16 янв', '19 янв', '20 янв', '21 янв'];
+        
+        const data = {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Бензин А-95',
+                    data: [80.83, 80.67, 80.17, 79.69, 79.49],
+                    borderColor: '#ec4899',
+                    backgroundColor: 'rgba(236, 72, 153, 0.1)',
+                    borderWidth: 3,
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: '#ec4899',
+                    pointBorderColor: '#ffffff',
+                    pointBorderWidth: 2,
+                    pointRadius: 6,
+                    pointHoverRadius: 9,
+                    pointHoverBorderWidth: 3
+                },
+                {
+                    label: 'Бензин А-92',
+                    data: [75.54, 75.39, 74.90, 74.59, 74.38],
+                    borderColor: '#3b82f6',
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    borderWidth: 3,
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: '#3b82f6',
+                    pointBorderColor: '#ffffff',
+                    pointBorderWidth: 2,
+                    pointRadius: 6,
+                    pointHoverRadius: 9,
+                    pointHoverBorderWidth: 3
+                },
+                {
+                    label: 'Дизельное топливо',
+                    data: [80.26, 80.12, 79.60, 79.08, 78.86],
+                    borderColor: '#22c55e',
+                    backgroundColor: 'rgba(34, 197, 94, 0.1)',
+                    borderWidth: 3,
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: '#22c55e',
+                    pointBorderColor: '#ffffff',
+                    pointBorderWidth: 2,
+                    pointRadius: 6,
+                    pointHoverRadius: 9,
+                    pointHoverBorderWidth: 3
+                }
+            ]
+        };
+
+        const fuelChart = new Chart(ctx, {
+            type: 'line',
+            data: data,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(15, 12, 41, 0.95)',
+                        titleColor: '#ffffff',
+                        bodyColor: '#ffffff',
+                        titleFont: {
+                            size: 14,
+                            weight: '600',
+                            family: 'Inter'
+                        },
+                        bodyFont: {
+                            size: 13,
+                            family: 'Inter'
+                        },
+                        padding: 15,
+                        cornerRadius: 12,
+                        displayColors: true,
+                        boxPadding: 6,
+                        callbacks: {
+                            label: function(context) {
+                                return context.dataset.label + ': ' + context.parsed.y.toFixed(2) + ' сом';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.06)',
+                            drawBorder: false
+                        },
+                        ticks: {
+                            color: 'rgba(255, 255, 255, 0.7)',
+                            font: {
+                                size: 13,
+                                family: 'Inter',
+                                weight: '500'
+                            },
+                            padding: 10
+                        }
+                    },
+                    y: {
+                        min: 72,
+                        max: 83,
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.06)',
+                            drawBorder: false
+                        },
+                        ticks: {
+                            color: 'rgba(255, 255, 255, 0.7)',
+                            font: {
+                                size: 13,
+                                family: 'Inter',
+                                weight: '500'
+                            },
+                            padding: 10,
+                            callback: function(value) {
+                                return value + ' сом';
+                            }
+                        }
+                    }
+                },
+                animation: {
+                    duration: 1500,
+                    easing: 'easeOutQuart'
+                }
+            }
+        });
+
+        function toggleDataset(index) {
+            const meta = fuelChart.getDatasetMeta(index);
+            meta.hidden = meta.hidden === null ? !fuelChart.data.datasets[index].hidden : null;
+            fuelChart.update();
+        }
+    </script>
+</body>
+</html>
