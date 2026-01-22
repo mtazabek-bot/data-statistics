@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Добыча полезных ископаемых в Кыргызстане - 2025</title>
+    <meta name="description" content="Интерактивная карта добычи полезных ископаемых по регионам Кыргызской Республики за январь-декабрь 2025 года">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="background-effects">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+    </div>
+    
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <div class="logo-icon">
+                        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M20 4L36 12V28L20 36L4 28V12L20 4Z" stroke="url(#logo-gradient)" stroke-width="2" fill="none"/>
+                            <circle cx="20" cy="20" r="6" fill="url(#logo-gradient)"/>
+                            <defs>
+                                <linearGradient id="logo-gradient" x1="4" y1="4" x2="36" y2="36">
+                                    <stop offset="0%" stop-color="#FFD700"/>
+                                    <stop offset="100%" stop-color="#FF6B35"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                    <div class="title-group">
+                        <h1>Добыча полезных ископаемых</h1>
+                        <p class="subtitle">Кыргызская Республика • Январь-Декабрь 2025</p>
+                    </div>
+                </div>
+                <div class="stats-summary">
+                    <div class="stat-card">
+                        <span class="stat-value">73.4</span>
+                        <span class="stat-label">млрд сомов</span>
+                        <span class="stat-desc">Общий объём добычи</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-value">+14.2%</span>
+                        <span class="stat-label">рост</span>
+                        <span class="stat-desc">по сравнению с 2024</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <section class="map-section">
+                <div class="map-container">
+                    <svg id="kg-map" viewBox="0 0 1000 500" preserveAspectRatio="xMidYMid meet">
+                        <!-- Talas Oblast -->
+                        <path id="talas" class="region" d="M80,150 L120,120 L180,110 L220,130 L240,160 L220,190 L180,200 L140,190 L100,180 Z" data-region="talas"/>
+                        
+                        <!-- Chui Oblast -->
+                        <path id="chui" class="region" d="M220,130 L280,100 L360,90 L440,100 L480,130 L500,170 L480,200 L440,210 L380,200 L320,190 L260,180 L240,160 Z" data-region="chui"/>
+                        
+                        <!-- Issyk-Kul Oblast -->
+                        <path id="issykkul" class="region" d="M480,130 L560,110 L660,100 L760,110 L820,140 L850,180 L840,230 L800,260 L720,270 L620,260 L540,240 L500,210 L480,170 Z" data-region="issykkul"/>
+                        
+                        <!-- Naryn Oblast -->
+                        <path id="naryn" class="region" d="M320,190 L380,200 L440,210 L500,210 L540,240 L560,290 L540,350 L480,380 L400,380 L340,350 L300,300 L280,250 L300,210 Z" data-region="naryn"/>
+                        
+                        <!-- Jalal-Abad Oblast -->
+                        <path id="jalalabad" class="region" d="M100,180 L140,190 L180,200 L220,190 L260,180 L300,210 L280,250 L260,300 L220,340 L160,360 L100,340 L60,290 L60,230 Z" data-region="jalalabad"/>
+                        
+                        <!-- Osh Oblast -->
+                        <path id="osh" class="region" d="M160,360 L220,340 L260,300 L300,300 L340,350 L360,400 L340,440 L280,460 L200,450 L140,420 L120,380 Z" data-region="osh"/>
+                        
+                        <!-- Batken Oblast -->
+                        <path id="batken" class="region" d="M60,290 L100,340 L120,380 L140,420 L100,450 L50,440 L20,400 L20,340 L40,300 Z" data-region="batken"/>
+                        
+                        <!-- Bishkek City -->
+                        <circle id="bishkek" class="city" cx="400" cy="150" r="18" data-region="bishkek"/>
+                        
+                        <!-- Osh City -->
+                        <circle id="osh-city" class="city" cx="280" cy="400" r="15" data-region="osh-city"/>
+                        
+                        <!-- Region Labels -->
+                        <text x="150" y="155" class="region-label">ТАЛАССКАЯ</text>
+                        <text x="370" y="155" class="region-label">ЧУЙСКАЯ</text>
+                        <text x="660" y="180" class="region-label">ИССЫК-КУЛЬСКАЯ</text>
+                        <text x="420" y="290" class="region-label">НАРЫНСКАЯ</text>
+                        <text x="160" y="270" class="region-label">ДЖАЛАЛ-АБАДСКАЯ</text>
+                        <text x="250" y="395" class="region-label">ОШСКАЯ</text>
+                        <text x="70" y="370" class="region-label">БАТКЕНСКАЯ</text>
+                        
+                        <!-- City Labels -->
+                        <text x="400" y="125" class="city-label">БИШКЕК</text>
+                        <text x="280" y="430" class="city-label">ОШ</text>
+                        
+                        <!-- Mining icons -->
+                        <g class="mining-icons">
+                            <circle cx="170" cy="280" r="8" class="mining-icon active"/>
+                            <circle cx="660" cy="160" r="8" class="mining-icon"/>
+                            <circle cx="420" cy="310" r="8" class="mining-icon"/>
+                            <circle cx="250" cy="380" r="8" class="mining-icon"/>
+                            <circle cx="80" cy="360" r="8" class="mining-icon"/>
+                            <circle cx="380" cy="165" r="8" class="mining-icon active"/>
+                        </g>
+                    </svg>
+                    
+                    <div id="tooltip" class="tooltip">
+                        <div class="tooltip-header">
+                            <span class="tooltip-region"></span>
+                            <span class="tooltip-badge">2025</span>
+                        </div>
+                        <div class="tooltip-body">
+                            <div class="tooltip-main-value">
+                                <span class="value"></span>
+                                <span class="unit">тыс. сомов</span>
+                            </div>
+                            <div class="tooltip-details">
+                                <div class="detail-item">
+                                    <span class="detail-label">Доля от общего</span>
+                                    <span class="detail-value share"></span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Индекс физ. объёма</span>
+                                    <span class="detail-value index"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="legend">
+                    <h3>Объём добычи (млрд сом)</h3>
+                    <div class="legend-scale">
+                        <div class="legend-gradient"></div>
+                        <div class="legend-labels">
+                            <span>0.06</span>
+                            <span>8</span>
+                            <span>16</span>
+                            <span>24</span>
+                            <span>32</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="data-section">
+                <div class="section-header">
+                    <h2>Региональные данные</h2>
+                    <p>Нажмите на регион для подробной информации</p>
+                </div>
+                
+                <div class="region-cards">
+                    <div class="region-card" data-region="jalalabad">
+                        <div class="card-rank">1</div>
+                        <div class="card-content">
+                            <h3>Джалал-Абадская область</h3>
+                            <div class="card-value">31.77 <span>млрд сом</span></div>
+                            <div class="card-bar">
+                                <div class="bar-fill" style="width: 100%"></div>
+                            </div>
+                            <div class="card-stats">
+                                <span class="growth positive">+36.4%</span>
+                                <span class="share">43.3% от общего</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="region-card" data-region="chui">
+                        <div class="card-rank">2</div>
+                        <div class="card-content">
+                            <h3>Чуйская область</h3>
+                            <div class="card-value">27.32 <span>млрд сом</span></div>
+                            <div class="card-bar">
+                                <div class="bar-fill" style="width: 86%"></div>
+                            </div>
+                            <div class="card-stats">
+                                <span class="growth negative">-4.4%</span>
+                                <span class="share">37.2% от общего</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="region-card" data-region="naryn">
+                        <div class="card-rank">3</div>
+                        <div class="card-content">
+                            <h3>Нарынская область</h3>
+                            <div class="card-value">5.37 <span>млрд сом</span></div>
+                            <div class="card-bar">
+                                <div class="bar-fill" style="width: 17%"></div>
+                            </div>
+                            <div class="card-stats">
+                                <span class="growth positive">+11.5%</span>
+                                <span class="share">7.3% от общего</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="region-card" data-region="batken">
+                        <div class="card-rank">4</div>
+                        <div class="card-content">
+                            <h3>Баткенская область</h3>
+                            <div class="card-value">4.03 <span>млрд сом</span></div>
+                            <div class="card-bar">
+                                <div class="bar-fill" style="width: 13%"></div>
+                            </div>
+                            <div class="card-stats">
+                                <span class="growth positive">+28.6%</span>
+                                <span class="share">5.5% от общего</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="region-card" data-region="osh">
+                        <div class="card-rank">5</div>
+                        <div class="card-content">
+                            <h3>Ошская область</h3>
+                            <div class="card-value">2.81 <span>млрд сом</span></div>
+                            <div class="card-bar">
+                                <div class="bar-fill" style="width: 9%"></div>
+                            </div>
+                            <div class="card-stats">
+                                <span class="growth negative">-15.6%</span>
+                                <span class="share">3.8% от общего</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="region-card" data-region="issykkul">
+                        <div class="card-rank">6</div>
+                        <div class="card-content">
+                            <h3>Иссык-Кульская область</h3>
+                            <div class="card-value">1.69 <span>млрд сом</span></div>
+                            <div class="card-bar">
+                                <div class="bar-fill" style="width: 5.3%"></div>
+                            </div>
+                            <div class="card-stats">
+                                <span class="growth positive">+79.3%</span>
+                                <span class="share">2.3% от общего</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="region-card" data-region="talas">
+                        <div class="card-rank">7</div>
+                        <div class="card-content">
+                            <h3>Таласская область</h3>
+                            <div class="card-value">0.23 <span>млрд сом</span></div>
+                            <div class="card-bar">
+                                <div class="bar-fill" style="width: 0.7%"></div>
+                            </div>
+                            <div class="card-stats">
+                                <span class="growth positive">+128.7%</span>
+                                <span class="share">0.3% от общего</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="region-card small" data-region="osh-city">
+                        <div class="card-rank city">г.</div>
+                        <div class="card-content">
+                            <h3>г. Ош</h3>
+                            <div class="card-value">0.08 <span>млрд сом</span></div>
+                            <div class="card-stats">
+                                <span class="growth positive">+31.4%</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="region-card small" data-region="bishkek">
+                        <div class="card-rank city">г.</div>
+                        <div class="card-content">
+                            <h3>г. Бишкек</h3>
+                            <div class="card-value">0.06 <span>млрд сом</span></div>
+                            <div class="card-stats">
+                                <span class="growth negative">-11.4%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="breakdown-section">
+                <div class="section-header">
+                    <h2>Структура добычи по видам</h2>
+                    <p>Распределение по основным видам полезных ископаемых (январь-декабрь 2025)</p>
+                </div>
+                
+                <div class="breakdown-grid">
+                    <div class="breakdown-card">
+                        <div class="breakdown-icon metal">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polygon points="12,2 22,8.5 22,15.5 12,22 2,15.5 2,8.5"/>
+                                <line x1="12" y1="2" x2="12" y2="22"/>
+                                <line x1="2" y1="8.5" x2="22" y2="8.5"/>
+                            </svg>
+                        </div>
+                        <div class="breakdown-content">
+                            <h4>Добыча металлических руд</h4>
+                            <div class="breakdown-value">51.33 <span>млрд сом</span></div>
+                            <div class="breakdown-percent">70.0%</div>
+                            <div class="breakdown-bar">
+                                <div class="bar-fill" style="width: 70%"></div>
+                            </div>
+                            <p class="breakdown-change">+21.6% к 2024</p>
+                        </div>
+                    </div>
+                    
+                    <div class="breakdown-card">
+                        <div class="breakdown-icon coal">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                                <path d="M2 17l10 5 10-5"/>
+                                <path d="M2 12l10 5 10-5"/>
+                            </svg>
+                        </div>
+                        <div class="breakdown-content">
+                            <h4>Добыча угля</h4>
+                            <div class="breakdown-value">11.25 <span>млрд сом</span></div>
+                            <div class="breakdown-percent">15.3%</div>
+                            <div class="breakdown-bar">
+                                <div class="bar-fill" style="width: 15.3%"></div>
+                            </div>
+                            <p class="breakdown-change">+10.3% к 2024</p>
+                        </div>
+                    </div>
+                    
+                    <div class="breakdown-card">
+                        <div class="breakdown-icon oil">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M6 3v18h12V3L12 7 6 3z"/>
+                                <line x1="6" y1="12" x2="18" y2="12"/>
+                            </svg>
+                        </div>
+                        <div class="breakdown-content">
+                            <h4>Нефть и природный газ</h4>
+                            <div class="breakdown-value">7.81 <span>млрд сом</span></div>
+                            <div class="breakdown-percent">10.6%</div>
+                            <div class="breakdown-bar">
+                                <div class="bar-fill" style="width: 10.6%"></div>
+                            </div>
+                            <p class="breakdown-change negative">-12.1% к 2024</p>
+                        </div>
+                    </div>
+                    
+                    <div class="breakdown-card">
+                        <div class="breakdown-icon other">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <circle cx="12" cy="12" r="4"/>
+                                <line x1="12" y1="2" x2="12" y2="8"/>
+                                <line x1="12" y1="16" x2="12" y2="22"/>
+                                <line x1="2" y1="12" x2="8" y2="12"/>
+                                <line x1="16" y1="12" x2="22" y2="12"/>
+                            </svg>
+                        </div>
+                        <div class="breakdown-content">
+                            <h4>Прочие полезные ископаемые</h4>
+                            <div class="breakdown-value">2.88 <span>млрд сом</span></div>
+                            <div class="breakdown-percent">3.9%</div>
+                            <div class="breakdown-bar">
+                                <div class="bar-fill" style="width: 3.9%"></div>
+                            </div>
+                            <p class="breakdown-change">+40.2% к 2024</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="source-info">
+                    <p>Источник: Национальный статистический комитет Кыргызской Республики</p>
+                    <p class="disclaimer">Основные экономические показатели по промышленности КР, январь-декабрь 2025г.</p>
+                </div>
+                <div class="footer-logo">
+                    <span>NSC KR</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
