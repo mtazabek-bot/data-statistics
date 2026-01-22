@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Интерактивная карта с координатами местоположений">
+    <title>Карта местоположений</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" 
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" 
+          crossorigin="anonymous" 
+          referrerpolicy="strict-origin-when-cross-origin"/>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #ec4899;
+            --accent: #06b6d4;
+            --bg-dark: #0f172a;
+            --bg-card: #1e293b;
+            --bg-glass: rgba(30, 41, 59, 0.85);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --border: rgba(148, 163, 184, 0.2);
+            --shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .header {
+            background: var(--bg-glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .logo-text {
+            font-size: 1.25rem;
+            font-weight: 600;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-stats {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 8px;
+            font-size: 0.875rem;
+        }
+
+        .stat-value {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        /* Main Container */
+        .main-container {
+            padding-top: 80px;
+            min-height: 100vh;
+            display: flex;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 360px;
+            background: var(--bg-card);
+            border-right: 1px solid var(--border);
+            height: calc(100vh - 80px);
+            overflow-y: auto;
+            position: fixed;
+            left: 0;
+            top: 80px;
+            z-index: 500;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .sidebar-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar-subtitle {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .locations-list {
+            padding: 1rem;
+        }
+
+        .location-card {
+            background: var(--bg-dark);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .location-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--gradient);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .location-card:hover {
+            transform: translateX(4px);
+            border-color: var(--primary);
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.2);
+        }
+
+        .location-card:hover::before {
+            opacity: 1;
+        }
+
+        .location-card.active {
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .location-card.active::before {
+            opacity: 1;
+        }
+
+        .location-name {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .location-badge {
+            background: var(--gradient);
+            padding: 0.125rem 0.5rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+
+        .location-coords {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .coord-item {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .coord-label {
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        /* Map Container */
+        .map-container {
+            flex: 1;
+            margin-left: 360px;
+            height: calc(100vh - 80px);
+            position: relative;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Custom Marker */
+        .custom-marker {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient);
+            border-radius: 50% 50% 50% 0;
+            transform: rotate(-45deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.5);
+            animation: bounce 0.5s ease;
+        }
+
+        .custom-marker::after {
+            content: '';
+            width: 16px;
+            height: 16px;
+            background: white;
+            border-radius: 50%;
+            transform: rotate(45deg);
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: rotate(-45deg) translateY(0); }
+            50% { transform: rotate(-45deg) translateY(-10px); }
+        }
+
+        /* Popup Styles */
+        .leaflet-popup-content-wrapper {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+        }
+
+        .leaflet-popup-content {
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 1rem;
+        }
+
+        .leaflet-popup-tip {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+        }
+
+        .popup-content {
+            min-width: 200px;
+        }
+
+        .popup-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+        }
+
+        .popup-coords {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+        }
+
+        .popup-coord {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem;
+            background: var(--bg-dark);
+            border-radius: 6px;
+        }
+
+        .popup-coord-label {
+            color: var(--text-secondary);
+        }
+
+        .popup-coord-value {
+            color: var(--accent);
+            font-weight: 500;
+            font-family: monospace;
+        }
+
+        /* Mobile Responsiveness */
+        @media screen and (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                max-height: 40vh;
+                position: relative;
+                transform: none;
+                top: 0;
+            }
+
+            .main-container {
+                flex-direction: column;
+            }
+
+            .map-container {
+                margin-left: 0;
+                height: 60vh;
+            }
+
+            .header-stats {
+                display: none;
+            }
+
+            .header {
+                padding: 0.75rem 1rem;
+            }
+
+            .logo-text {
+                font-size: 1rem;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .sidebar {
+                max-height: 35vh;
+            }
+
+            .map-container {
+                height: 65vh;
+            }
+
+            .location-card {
+                padding: 0.75rem;
+            }
+
+            .sidebar-header {
+                padding: 1rem;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--bg-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loader {
+            width: 60px;
+            height: 60px;
+            border: 4px solid var(--border);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Security Badge */
+        .security-badge {
+            position: fixed;
+            bottom: 1rem;
+            right: 1rem;
+            background: var(--bg-glass);
+            backdrop-filter: blur(10px);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.75rem;
+            color: #22c55e;
+            z-index: 1000;
+        }
+
+        .security-icon {
+            width: 16px;
+            height: 16px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading" id="loading">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">
+            <div class="logo-icon">📍</div>
+            <span class="logo-text">Карта местоположений</span>
+        </div>
+        <div class="header-stats">
+            <div class="stat-item">
+                <span>Точек:</span>
+                <span class="stat-value" id="total-points">0</span>
+            </div>
+            <div class="stat-item">
+                <span>Центр:</span>
+                <span class="stat-value">Бишкек</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2 class="sidebar-title">📋 Список местоположений</h2>
+                <p class="sidebar-subtitle">Нажмите на локацию для навигации</p>
+            </div>
+            <div class="locations-list" id="locations-list">
+                <!-- Locations will be inserted here -->
+            </div>
+        </aside>
+
+        <!-- Map -->
+        <div class="map-container">
+            <div id="map"></div>
+        </div>
+    </div>
+
+    <!-- Security Badge -->
+    <div class="security-badge">
+        <svg class="security-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <path d="M9 12l2 2 4-4"/>
+        </svg>
+        <span>Защищённое соединение</span>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" 
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" 
+            crossorigin="anonymous"
+            referrerpolicy="strict-origin-when-cross-origin"></script>
+
+    <script>
+        // Location data from CSV
+        const locations = [
+            {
+                name: "Место на карте",
+                lat: 42.7312210648116,
+                lng: 73.79671300749432
+            }
+        ];
+
+        // Initialize map
+        const map = L.map('map', {
+            center: [42.7312210648116, 73.79671300749432],
+            zoom: 13,
+            zoomControl: true
+        });
+
+        // Add tile layer with dark theme
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+            subdomains: 'abcd',
+            maxZoom: 20
+        }).addTo(map);
+
+        // Custom icon
+        const customIcon = L.divIcon({
+            className: 'custom-marker-wrapper',
+            html: '<div class="custom-marker"></div>',
+            iconSize: [40, 40],
+            iconAnchor: [20, 40],
+            popupAnchor: [0, -40]
+        });
+
+        // Add markers and sidebar items
+        const markers = [];
+        const locationsList = document.getElementById('locations-list');
+
+        locations.forEach((location, index) => {
+            // Create marker
+            const marker = L.marker([location.lat, location.lng], {
+                icon: customIcon
+            }).addTo(map);
+
+            // Create popup content
+            const popupContent = `
+                <div class="popup-content">
+                    <h3 class="popup-title">📍 ${location.name}</h3>
+                    <div class="popup-coords">
+                        <div class="popup-coord">
+                            <span class="popup-coord-label">Широта:</span>
+                            <span class="popup-coord-value">${location.lat.toFixed(6)}</span>
+                        </div>
+                        <div class="popup-coord">
+                            <span class="popup-coord-label">Долгота:</span>
+                            <span class="popup-coord-value">${location.lng.toFixed(6)}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            marker.bindPopup(popupContent);
+            markers.push(marker);
+
+            // Create sidebar card
+            const card = document.createElement('div');
+            card.className = 'location-card';
+            card.innerHTML = `
+                <div class="location-name">
+                    <span>${location.name}</span>
+                    <span class="location-badge">#${index + 1}</span>
+                </div>
+                <div class="location-coords">
+                    <div class="coord-item">
+                        <span class="coord-label">Ш:</span>
+                        <span>${location.lat.toFixed(4)}</span>
+                    </div>
+                    <div class="coord-item">
+                        <span class="coord-label">Д:</span>
+                        <span>${location.lng.toFixed(4)}</span>
+                    </div>
+                </div>
+            `;
+
+            card.addEventListener('click', () => {
+                // Remove active class from all cards
+                document.querySelectorAll('.location-card').forEach(c => c.classList.remove('active'));
+                card.classList.add('active');
+                
+                // Pan to marker and open popup
+                map.setView([location.lat, location.lng], 15, {
+                    animate: true,
+                    duration: 0.5
+                });
+                marker.openPopup();
+            });
+
+            locationsList.appendChild(card);
+        });
+
+        // Update stats
+        document.getElementById('total-points').textContent = locations.length;
+
+        // Hide loading screen
+        setTimeout(() => {
+            document.getElementById('loading').classList.add('hidden');
+        }, 800);
+
+        // Fit bounds if multiple markers
+        if (markers.length > 1) {
+            const group = new L.featureGroup(markers);
+            map.fitBounds(group.getBounds().pad(0.1));
+        }
+    </script>
+</body>
+</html>
