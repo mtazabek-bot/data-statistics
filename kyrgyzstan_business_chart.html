@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Хозяйствующие субъекты Кыргызстана по регионам</title>
+    <meta name="description"
+        content="Интерактивная круговая диаграмма количества хозяйствующих субъектов в Кыргызстане по регионам">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            box-shadow:
+                0 25px 50px -12px rgba(0, 0, 0, 0.5),
+                0 0 0 1px rgba(255, 255, 255, 0.05);
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff 0%, #a78bfa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 300;
+        }
+
+        .chart-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 450px;
+            aspect-ratio: 1;
+        }
+
+        .legend-container {
+            flex: 1;
+            min-width: 280px;
+        }
+
+        .legend-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .legend-items {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .legend-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+
+        .legend-item.dimmed {
+            opacity: 0.3;
+        }
+
+        .legend-color {
+            width: 14px;
+            height: 14px;
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+
+        .legend-label {
+            flex: 1;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 400;
+        }
+
+        .legend-value {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .legend-percent {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.5);
+            min-width: 45px;
+            text-align: right;
+        }
+
+        .total-container {
+            margin-top: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(167, 139, 250, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+            border-radius: 16px;
+            border: 1px solid rgba(167, 139, 250, 0.2);
+            text-align: center;
+        }
+
+        .total-label {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.6);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .total-value {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #a78bfa 0%, #7c3aed 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .total-unit {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .tooltip-custom {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 15px 20px;
+            pointer-events: none;
+            transform: translate(-50%, -120%);
+            z-index: 1000;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .tooltip-custom.visible {
+            opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 25px;
+            }
+
+            .header h1 {
+                font-size: 1.4rem;
+            }
+
+            .chart-wrapper {
+                flex-direction: column;
+            }
+
+            .chart-container {
+                max-width: 320px;
+            }
+
+            .legend-item {
+                padding: 10px 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏢 Хозяйствующие субъекты Кыргызстана</h1>
+            <p>Распределение по регионам (тыс. единиц)</p>
+        </div>
+
+        <div class="chart-wrapper">
+            <div class="chart-container">
+                <canvas id="pieChart"></canvas>
+            </div>
+
+            <div class="legend-container">
+                <div class="legend-title">📍 Регионы</div>
+                <div class="legend-items" id="legend"></div>
+
+                <div class="total-container">
+                    <div class="total-label">Всего по республике</div>
+                    <div class="total-value">823,8</div>
+                    <div class="total-unit">тысяч субъектов</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Данные по регионам
+        const data = {
+            labels: [
+                'Ошская область',
+                'Жалал-Абадская область',
+                'Чуйская область',
+                'г. Бишкек',
+                'Баткенская область',
+                'Иссык-Кульская область',
+                'Нарынская область',
+                'Таласская область',
+                'г. Ош'
+            ],
+            values: [192.5, 140.3, 124.2, 81.3, 76.8, 72.3, 59.9, 42, 34.6]
+        };
+
+        // Красивая цветовая палитра
+        const colors = [
+            '#8b5cf6', // Violet
+            '#06b6d4', // Cyan
+            '#10b981', // Emerald
+            '#f59e0b', // Amber
+            '#ef4444', // Red
+            '#ec4899', // Pink
+            '#6366f1', // Indigo
+            '#14b8a6', // Teal
+            '#f97316'  // Orange
+        ];
+
+        const hoverColors = colors.map(c => c + 'dd');
+
+        // Расчет процентов
+        const total = data.values.reduce((a, b) => a + b, 0);
+        const percentages = data.values.map(v => ((v / total) * 100).toFixed(1));
+
+        // Создание диаграммы
+        const ctx = document.getElementById('pieChart').getContext('2d');
+
+        const chart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: data.labels,
+                datasets: [{
+                    data: data.values,
+                    backgroundColor: colors,
+                    hoverBackgroundColor: hoverColors,
+                    borderWidth: 2,
+                    borderColor: 'rgba(0, 0, 0, 0.3)',
+                    hoverBorderColor: '#fff',
+                    hoverBorderWidth: 3,
+                    hoverOffset: 15
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                cutout: '55%',
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        enabled: true,
+                        backgroundColor: 'rgba(0, 0, 0, 0.9)',
+                        titleColor: '#fff',
+                        bodyColor: '#fff',
+                        padding: 15,
+                        cornerRadius: 12,
+                        displayColors: true,
+                        boxPadding: 6,
+                        callbacks: {
+                            label: function (context) {
+                                const value = context.raw;
+                                const percent = percentages[context.dataIndex];
+                                return ` ${value} тыс. (${percent}%)`;
+                            }
+                        }
+                    }
+                },
+                animation: {
+                    animateRotate: true,
+                    animateScale: true,
+                    duration: 1500,
+                    easing: 'easeOutQuart'
+                },
+                onHover: (event, activeElements) => {
+                    const legendItems = document.querySelectorAll('.legend-item');
+
+                    if (activeElements.length > 0) {
+                        const activeIndex = activeElements[0].index;
+                        legendItems.forEach((item, index) => {
+                            if (index !== activeIndex) {
+                                item.classList.add('dimmed');
+                            } else {
+                                item.classList.remove('dimmed');
+                            }
+                        });
+                    } else {
+                        legendItems.forEach(item => item.classList.remove('dimmed'));
+                    }
+                }
+            }
+        });
+
+        // Создание кастомной легенды
+        const legendContainer = document.getElementById('legend');
+
+        data.labels.forEach((label, index) => {
+            const item = document.createElement('div');
+            item.className = 'legend-item';
+            item.innerHTML = `
+                <div class="legend-color" style="background: ${colors[index]}"></div>
+                <div class="legend-label">${label}</div>
+                <div class="legend-value">${data.values[index]}</div>
+                <div class="legend-percent">${percentages[index]}%</div>
+            `;
+
+            // Интерактивность легенды
+            item.addEventListener('mouseenter', () => {
+                const activeElement = chart.getActiveElements();
+                chart.setActiveElements([{
+                    datasetIndex: 0,
+                    index: index
+                }]);
+                chart.update();
+
+                document.querySelectorAll('.legend-item').forEach((el, i) => {
+                    if (i !== index) el.classList.add('dimmed');
+                });
+            });
+
+            item.addEventListener('mouseleave', () => {
+                chart.setActiveElements([]);
+                chart.update();
+                document.querySelectorAll('.legend-item').forEach(el => {
+                    el.classList.remove('dimmed');
+                });
+            });
+
+            // Клик для toggle видимости
+            item.addEventListener('click', () => {
+                const isHidden = chart.getDatasetMeta(0).data[index].hidden;
+                chart.getDatasetMeta(0).data[index].hidden = !isHidden;
+                item.style.opacity = isHidden ? '1' : '0.3';
+                chart.update();
+            });
+
+            legendContainer.appendChild(item);
+        });
+    </script>
+</body>
+
+</html>
