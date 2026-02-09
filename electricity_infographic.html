@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Инфографика по балансу электроэнергии в Кыргызской Республике с 2020 по 2025 год">
+    <title>Баланс электроэнергии в Кыргызстане 2020-2025</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-gradient: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --accent-blue: #4fc3f7;
+            --accent-cyan: #00e5ff;
+            --accent-purple: #b388ff;
+            --accent-orange: #ffab40;
+            --accent-green: #69f0ae;
+            --glow-blue: 0 0 30px rgba(79, 195, 247, 0.4);
+            --glow-orange: 0 0 30px rgba(255, 171, 64, 0.4);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--primary-gradient);
+            min-height: 100vh;
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        /* Animated background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(79, 195, 247, 0.15) 0%, transparent 70%);
+            top: -100px;
+            right: -100px;
+            animation: float 15s ease-in-out infinite;
+        }
+
+        .bg-animation::after {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(179, 136, 255, 0.1) 0%, transparent 70%);
+            bottom: -150px;
+            left: -150px;
+            animation: float 20s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            50% {
+                transform: translate(30px, -30px) scale(1.1);
+            }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo-icon {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: auto;
+            margin-right: auto;
+            box-shadow: var(--glow-blue);
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                box-shadow: var(--glow-blue);
+            }
+
+            50% {
+                box-shadow: 0 0 50px rgba(79, 195, 247, 0.6);
+            }
+        }
+
+        .logo-icon svg {
+            width: 50px;
+            height: 50px;
+            fill: white;
+        }
+
+        h1 {
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 800;
+            margin-bottom: 15px;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 200% 100%;
+            animation: gradientMove 5s linear infinite;
+        }
+
+        @keyframes gradientMove {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .period-badge {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 8px 20px;
+            background: rgba(79, 195, 247, 0.15);
+            border: 1px solid rgba(79, 195, 247, 0.3);
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--accent-cyan);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: fadeInUp 0.6s ease-out backwards;
+        }
+
+        .stat-card:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .stat-card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .stat-card:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .stat-card:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-blue);
+            box-shadow: var(--glow-blue);
+        }
+
+        .stat-card.production {
+            border-top: 3px solid var(--accent-cyan);
+        }
+
+        .stat-card.import {
+            border-top: 3px solid var(--accent-orange);
+        }
+
+        .stat-card.growth {
+            border-top: 3px solid var(--accent-green);
+        }
+
+        .stat-card.total {
+            border-top: 3px solid var(--accent-purple);
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 20px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .stat-card.production .stat-icon {
+            background: linear-gradient(135deg, rgba(0, 229, 255, 0.2), rgba(79, 195, 247, 0.1));
+        }
+
+        .stat-card.import .stat-icon {
+            background: linear-gradient(135deg, rgba(255, 171, 64, 0.2), rgba(255, 138, 101, 0.1));
+        }
+
+        .stat-card.growth .stat-icon {
+            background: linear-gradient(135deg, rgba(105, 240, 174, 0.2), rgba(76, 175, 80, 0.1));
+        }
+
+        .stat-card.total .stat-icon {
+            background: linear-gradient(135deg, rgba(179, 136, 255, 0.2), rgba(156, 39, 176, 0.1));
+        }
+
+        .stat-icon svg {
+            width: 32px;
+            height: 32px;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .stat-card.production .stat-value {
+            color: var(--accent-cyan);
+        }
+
+        .stat-card.import .stat-value {
+            color: var(--accent-orange);
+        }
+
+        .stat-card.growth .stat-value {
+            color: var(--accent-green);
+        }
+
+        .stat-card.total .stat-value {
+            color: var(--accent-purple);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .stat-sublabel {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.4);
+            margin-top: 5px;
+        }
+
+        /* Charts Section */
+        .charts-section {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        @media (min-width: 1024px) {
+            .charts-section {
+                grid-template-columns: 2fr 1fr;
+            }
+        }
+
+        .chart-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 30px;
+            animation: fadeInUp 0.8s ease-out backwards;
+            animation-delay: 0.5s;
+        }
+
+        .chart-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .chart-title-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+        }
+
+        .chart-container {
+            position: relative;
+            height: 400px;
+        }
+
+        .pie-chart-container {
+            position: relative;
+            height: 350px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Year comparison */
+        .year-comparison {
+            margin-top: 50px;
+            animation: fadeInUp 1s ease-out backwards;
+            animation-delay: 0.7s;
+        }
+
+        .comparison-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .year-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+        }
+
+        .year-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .year-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
+        }
+
+        .year-card:hover {
+            transform: scale(1.05);
+            border-color: var(--accent-blue);
+        }
+
+        .year-number {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .year-stat {
+            margin-bottom: 12px;
+        }
+
+        .year-stat-value {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .year-stat-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 3px;
+        }
+
+        .production-bar,
+        .import-bar {
+            height: 8px;
+            border-radius: 4px;
+            margin-top: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .production-bar {
+            background: rgba(79, 195, 247, 0.2);
+        }
+
+        .production-bar .fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue));
+            border-radius: 4px;
+            transition: width 1s ease;
+        }
+
+        .import-bar {
+            background: rgba(255, 171, 64, 0.2);
+        }
+
+        .import-bar .fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-orange), #ff7043);
+            border-radius: 4px;
+            transition: width 1s ease;
+        }
+
+        /* Legend */
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .legend-dot.production {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+        }
+
+        .legend-dot.import {
+            background: linear-gradient(135deg, var(--accent-orange), #ff7043);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 40px;
+            border-top: 1px solid var(--card-border);
+        }
+
+        .source {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+
+            .stat-card {
+                padding: 20px;
+            }
+
+            .stat-value {
+                font-size: 1.5rem;
+            }
+
+            .chart-container {
+                height: 300px;
+            }
+
+            .year-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .year-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bg-animation"></div>
+
+    <div class="container">
+        <header>
+            <div class="logo-icon">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M11 21h-1l1-7H7.5c-.58 0-.57-.32-.38-.66.19-.34.05-.08.07-.12C8.48 10.94 10.42 7.54 13 3h1l-1 7h3.5c.49 0 .56.33.47.51l-.07.15C12.96 17.55 11 21 11 21z" />
+                </svg>
+            </div>
+            <h1>Баланс электроэнергии Кыргызстана</h1>
+            <p class="subtitle">Производство и импорт электроэнергии в Кыргызской Республике</p>
+            <span class="period-badge">📊 2020 — 2025 годы</span>
+        </header>
+
+        <div class="stats-grid">
+            <div class="stat-card production">
+                <div class="stat-icon">
+                    <svg viewBox="0 0 24 24" fill="#00e5ff">
+                        <path
+                            d="M11 21h-1l1-7H7.5c-.58 0-.57-.32-.38-.66l.07-.12C8.48 10.94 10.42 7.54 13 3h1l-1 7h3.5c.49 0 .56.33.47.51l-.07.15L11 21z" />
+                    </svg>
+                </div>
+                <div class="stat-value" id="production2025">15 386,9</div>
+                <div class="stat-label">Производство 2025</div>
+                <div class="stat-sublabel">млн. кВт.часов</div>
+            </div>
+
+            <div class="stat-card import">
+                <div class="stat-icon">
+                    <svg viewBox="0 0 24 24" fill="#ffab40">
+                        <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
+                    </svg>
+                </div>
+                <div class="stat-value" id="import2025">3 800,0</div>
+                <div class="stat-label">Импорт 2025</div>
+                <div class="stat-sublabel">млн. кВт.часов</div>
+            </div>
+
+            <div class="stat-card growth">
+                <div class="stat-icon">
+                    <svg viewBox="0 0 24 24" fill="#69f0ae">
+                        <path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z" />
+                    </svg>
+                </div>
+                <div class="stat-value" id="growthRate">+4,4%</div>
+                <div class="stat-label">Рост производства</div>
+                <div class="stat-sublabel">2024 → 2025</div>
+            </div>
+
+            <div class="stat-card total">
+                <div class="stat-icon">
+                    <svg viewBox="0 0 24 24" fill="#b388ff">
+                        <path
+                            d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z" />
+                    </svg>
+                </div>
+                <div class="stat-value" id="totalEnergy">19 186,9</div>
+                <div class="stat-label">Всего 2025</div>
+                <div class="stat-sublabel">производство + импорт</div>
+            </div>
+        </div>
+
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-dot production"></div>
+                <span>Производство электроэнергии</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-dot import"></div>
+                <span>Импорт электроэнергии</span>
+            </div>
+        </div>
+
+        <div class="charts-section">
+            <div class="chart-card">
+                <h3 class="chart-title">
+                    <div class="chart-title-icon">
+                        <svg viewBox="0 0 24 24" fill="white" width="24" height="24">
+                            <path d="M3.5 18.49l6-6.01 4 4L22 6.92l-1.41-1.41-7.09 7.97-4-4L2 16.99z" />
+                        </svg>
+                    </div>
+                    Динамика производства и импорта
+                </h3>
+                <div class="chart-container">
+                    <canvas id="mainChart"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-card">
+                <h3 class="chart-title">
+                    <div class="chart-title-icon">
+                        <svg viewBox="0 0 24 24" fill="white" width="24" height="24">
+                            <path
+                                d="M11 2v20c-5.07-.5-9-4.79-9-10s3.93-9.5 9-10zm2.03 0v8.99H22c-.47-4.74-4.24-8.52-8.97-8.99zm0 11.01V22c4.74-.47 8.5-4.25 8.97-8.99h-8.97z" />
+                        </svg>
+                    </div>
+                    Структура 2025
+                </h3>
+                <div class="pie-chart-container">
+                    <canvas id="pieChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="year-comparison">
+            <h2 class="comparison-title">📈 Показатели по годам</h2>
+            <div class="year-grid" id="yearGrid"></div>
+        </div>
+
+        <footer>
+            <p class="source">Источник данных: Национальный статистический комитет Кыргызской Республики</p>
+        </footer>
+    </div>
+
+    <script>
+        // Data
+        const years = ['2020', '2021', '2022', '2023', '2024', '2025'];
+        const production = [15404.2, 15138.0, 13882.5, 13839.3, 14736.3, 15386.9];
+        const imports = [352.6, 1682.9, 2806.4, 3488.8, 3841.5, 3800.0];
+
+        // Format number with spaces
+        function formatNumber(num) {
+            return num.toFixed(1).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+        }
+
+        // Main Chart
+        const mainCtx = document.getElementById('mainChart').getContext('2d');
+        const gradient1 = mainCtx.createLinearGradient(0, 0, 0, 400);
+        gradient1.addColorStop(0, 'rgba(0, 229, 255, 0.4)');
+        gradient1.addColorStop(1, 'rgba(0, 229, 255, 0.02)');
+
+        const gradient2 = mainCtx.createLinearGradient(0, 0, 0, 400);
+        gradient2.addColorStop(0, 'rgba(255, 171, 64, 0.4)');
+        gradient2.addColorStop(1, 'rgba(255, 171, 64, 0.02)');
+
+        new Chart(mainCtx, {
+            type: 'line',
+            data: {
+                labels: years,
+                datasets: [
+                    {
+                        label: 'Производство',
+                        data: production,
+                        borderColor: '#00e5ff',
+                        backgroundColor: gradient1,
+                        fill: true,
+                        tension: 0.4,
+                        borderWidth: 3,
+                        pointBackgroundColor: '#00e5ff',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        pointRadius: 6,
+                        pointHoverRadius: 10
+                    },
+                    {
+                        label: 'Импорт',
+                        data: imports,
+                        borderColor: '#ffab40',
+                        backgroundColor: gradient2,
+                        fill: true,
+                        tension: 0.4,
+                        borderWidth: 3,
+                        pointBackgroundColor: '#ffab40',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        pointRadius: 6,
+                        pointHoverRadius: 10
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: {
+                    mode: 'index',
+                    intersect: false
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top',
+                        labels: {
+                            color: 'rgba(255, 255, 255, 0.8)',
+                            font: {
+                                family: 'Inter',
+                                size: 12,
+                                weight: '500'
+                            },
+                            padding: 20,
+                            usePointStyle: true,
+                            pointStyle: 'circle'
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(15, 12, 41, 0.95)',
+                        titleColor: '#fff',
+                        bodyColor: 'rgba(255, 255, 255, 0.8)',
+                        borderColor: 'rgba(79, 195, 247, 0.3)',
+                        borderWidth: 1,
+                        padding: 15,
+                        cornerRadius: 12,
+                        titleFont: {
+                            family: 'Inter',
+                            size: 14,
+                            weight: '600'
+                        },
+                        bodyFont: {
+                            family: 'Inter',
+                            size: 13
+                        },
+                        callbacks: {
+                            label: function (context) {
+                                return context.dataset.label + ': ' + formatNumber(context.raw) + ' млн. кВт.ч';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.05)',
+                            drawBorder: false
+                        },
+                        ticks: {
+                            color: 'rgba(255, 255, 255, 0.7)',
+                            font: {
+                                family: 'Inter',
+                                size: 12,
+                                weight: '500'
+                            }
+                        }
+                    },
+                    y: {
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.05)',
+                            drawBorder: false
+                        },
+                        ticks: {
+                            color: 'rgba(255, 255, 255, 0.7)',
+                            font: {
+                                family: 'Inter',
+                                size: 11
+                            },
+                            callback: function (value) {
+                                return value.toLocaleString('ru-RU');
+                            }
+                        },
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Pie Chart
+        const pieCtx = document.getElementById('pieChart').getContext('2d');
+        new Chart(pieCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Производство', 'Импорт'],
+                datasets: [{
+                    data: [production[5], imports[5]],
+                    backgroundColor: [
+                        'rgba(0, 229, 255, 0.8)',
+                        'rgba(255, 171, 64, 0.8)'
+                    ],
+                    borderColor: [
+                        '#00e5ff',
+                        '#ffab40'
+                    ],
+                    borderWidth: 2,
+                    hoverOffset: 15
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '60%',
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            color: 'rgba(255, 255, 255, 0.8)',
+                            font: {
+                                family: 'Inter',
+                                size: 12,
+                                weight: '500'
+                            },
+                            padding: 20,
+                            usePointStyle: true,
+                            pointStyle: 'circle'
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(15, 12, 41, 0.95)',
+                        titleColor: '#fff',
+                        bodyColor: 'rgba(255, 255, 255, 0.8)',
+                        borderColor: 'rgba(79, 195, 247, 0.3)',
+                        borderWidth: 1,
+                        padding: 15,
+                        cornerRadius: 12,
+                        callbacks: {
+                            label: function (context) {
+                                const total = production[5] + imports[5];
+                                const percentage = ((context.raw / total) * 100).toFixed(1);
+                                return context.label + ': ' + formatNumber(context.raw) + ' млн. кВт.ч (' + percentage + '%)';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Year cards
+        const yearGrid = document.getElementById('yearGrid');
+        const maxProduction = Math.max(...production);
+        const maxImport = Math.max(...imports);
+
+        years.forEach((year, index) => {
+            const card = document.createElement('div');
+            card.className = 'year-card';
+            card.style.animationDelay = `${0.8 + index * 0.1}s`;
+
+            const productionPercent = (production[index] / maxProduction) * 100;
+            const importPercent = (imports[index] / maxImport) * 100;
+
+            card.innerHTML = `
+                <div class="year-number">${year}</div>
+                <div class="year-stat">
+                    <div class="year-stat-value">${formatNumber(production[index])}</div>
+                    <div class="year-stat-label">Производство (млн. кВт.ч)</div>
+                    <div class="production-bar">
+                        <div class="fill" style="width: ${productionPercent}%"></div>
+                    </div>
+                </div>
+                <div class="year-stat">
+                    <div class="year-stat-value">${formatNumber(imports[index])}</div>
+                    <div class="year-stat-label">Импорт (млн. кВт.ч)</div>
+                    <div class="import-bar">
+                        <div class="fill" style="width: ${importPercent}%"></div>
+                    </div>
+                </div>
+            `;
+
+            yearGrid.appendChild(card);
+        });
+
+        // Animate numbers on load
+        function animateValue(element, start, end, duration) {
+            const range = end - start;
+            const startTime = performance.now();
+
+            function update(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const easeProgress = 1 - Math.pow(1 - progress, 3);
+                const current = start + (range * easeProgress);
+                element.textContent = formatNumber(current);
+
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                }
+            }
+
+            requestAnimationFrame(update);
+        }
+
+        // Trigger animations when visible
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateValue(document.getElementById('production2025'), 0, 15386.9, 2000);
+                    animateValue(document.getElementById('import2025'), 0, 3800.0, 2000);
+                    animateValue(document.getElementById('totalEnergy'), 0, 19186.9, 2000);
+                    observer.disconnect();
+                }
+            });
+        }, { threshold: 0.3 });
+
+        observer.observe(document.querySelector('.stats-grid'));
+    </script>
+</body>
+
+</html>
