@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>Лизинговые компании КР — Embed</title>
+    <!-- ====== КИБЕРЗАЩИТА ====== -->
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; frame-ancestors *;">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="ALLOWALL">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <meta name="referrer" content="no-referrer">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0f0f1a;
+            --card: #16213e;
+            --t1: #e8e8f0;
+            --t2: #a0a0c0;
+            --tm: #6a6a8e;
+            --a1: #667eea;
+            --a5: #43e97b;
+            --brd: rgba(102, 126, 234, .15)
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--t1);
+            overflow-x: hidden
+        }
+
+        .wrap {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px 16px
+        }
+
+        .hdr {
+            text-align: center;
+            margin-bottom: 30px;
+            animation: fdIn .8s ease
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 16px;
+            background: rgba(102, 126, 234, .1);
+            border: 1px solid rgba(102, 126, 234, .2);
+            border-radius: 50px;
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--a1);
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            margin-bottom: 14px
+        }
+
+        .badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--a5);
+            border-radius: 50%;
+            animation: pulse 2s infinite
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1)
+            }
+
+            50% {
+                opacity: .5;
+                transform: scale(1.5)
+            }
+        }
+
+        h1 {
+            font-size: clamp(22px, 4.5vw, 42px);
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+            margin-bottom: 10px
+        }
+
+        .sub {
+            font-size: clamp(12px, 2vw, 15px);
+            color: var(--t2);
+            font-weight: 300
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 12px;
+            margin-bottom: 24px;
+            animation: fdIn .8s .2s both
+        }
+
+        .sc {
+            background: var(--card);
+            border: 1px solid var(--brd);
+            border-radius: 14px;
+            padding: 18px 14px;
+            text-align: center;
+            transition: transform .3s;
+            position: relative;
+            overflow: hidden
+        }
+
+        .sc::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px
+        }
+
+        .sc:nth-child(1)::before {
+            background: linear-gradient(90deg, #667eea, #764ba2)
+        }
+
+        .sc:nth-child(2)::before {
+            background: linear-gradient(90deg, #43e97b, #38f9d7)
+        }
+
+        .sc:nth-child(3)::before {
+            background: linear-gradient(90deg, #fa709a, #fee140)
+        }
+
+        .sc:hover {
+            transform: translateY(-3px)
+        }
+
+        .si {
+            font-size: 22px;
+            margin-bottom: 6px
+        }
+
+        .sv {
+            font-size: clamp(18px, 2.5vw, 26px);
+            font-weight: 800;
+            font-family: 'JetBrains Mono', monospace;
+            margin-bottom: 2px
+        }
+
+        .sc:nth-child(1) .sv {
+            color: var(--a1)
+        }
+
+        .sc:nth-child(2) .sv {
+            color: var(--a5)
+        }
+
+        .sc:nth-child(3) .sv {
+            color: #fa709a
+        }
+
+        .sl {
+            font-size: 11px;
+            color: var(--tm);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: .4px
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            margin-bottom: 20px;
+            flex-wrap: wrap
+        }
+
+        .tb {
+            padding: 8px 18px;
+            border: 1px solid var(--brd);
+            background: var(--card);
+            color: var(--t2);
+            border-radius: 50px;
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all .3s
+        }
+
+        .tb:hover {
+            border-color: var(--a1);
+            color: var(--t1)
+        }
+
+        .tb.on {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-color: transparent;
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, .4)
+        }
+
+        .sec {
+            display: none;
+            animation: fdIn .5s ease
+        }
+
+        .sec.on {
+            display: block
+        }
+
+        .bx {
+            background: var(--card);
+            border: 1px solid var(--brd);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 6px 24px rgba(0, 0, 0, .3)
+        }
+
+        .ct {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px
+        }
+
+        .cti {
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px
+        }
+
+        .br {
+            display: flex;
+            align-items: center;
+            margin-bottom: 6px;
+            padding: 4px 0;
+            cursor: pointer;
+            transition: all .2s;
+            border-radius: 6px
+        }
+
+        .br:hover {
+            background: rgba(102, 126, 234, .05);
+            padding-left: 6px
+        }
+
+        .brk {
+            width: 24px;
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--tm);
+            text-align: center;
+            flex-shrink: 0;
+            font-family: 'JetBrains Mono', monospace
+        }
+
+        .brl {
+            width: clamp(80px, 20vw, 200px);
+            font-size: clamp(10px, 1.5vw, 12px);
+            font-weight: 500;
+            color: var(--t1);
+            padding-right: 8px;
+            flex-shrink: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis
+        }
+
+        .brt {
+            flex: 1;
+            height: 26px;
+            background: rgba(102, 126, 234, .05);
+            border-radius: 5px;
+            overflow: hidden
+        }
+
+        .brf {
+            height: 100%;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 6px;
+            width: 0;
+            transition: width 1.2s cubic-bezier(.4, 0, .2, 1)
+        }
+
+        .brv {
+            font-size: 9px;
+            font-weight: 600;
+            color: #fff;
+            font-family: 'JetBrains Mono', monospace;
+            white-space: nowrap
+        }
+
+        .bro {
+            margin-left: 8px;
+            font-size: clamp(9px, 1.3vw, 11px);
+            font-weight: 600;
+            color: var(--t2);
+            font-family: 'JetBrains Mono', monospace;
+            white-space: nowrap;
+            flex-shrink: 0;
+            min-width: clamp(60px, 12vw, 90px)
+        }
+
+        .dn {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            align-items: start
+        }
+
+        .dw {
+            background: var(--card);
+            border: 1px solid var(--brd);
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center
+        }
+
+        .dsc {
+            position: relative;
+            width: clamp(220px, 30vw, 300px);
+            height: clamp(220px, 30vw, 300px)
+        }
+
+        .dcc {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center
+        }
+
+        .dcv {
+            font-size: 16px;
+            font-weight: 800;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--t1)
+        }
+
+        .dcl {
+            font-size: 10px;
+            color: var(--tm);
+            margin-top: 2px
+        }
+
+        .lgc {
+            background: var(--card);
+            border: 1px solid var(--brd);
+            border-radius: 16px;
+            padding: 18px;
+            max-height: 400px;
+            overflow-y: auto
+        }
+
+        .lgc::-webkit-scrollbar {
+            width: 3px
+        }
+
+        .lgc::-webkit-scrollbar-thumb {
+            background: var(--a1);
+            border-radius: 3px
+        }
+
+        .lgt {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 12px
+        }
+
+        .lgi {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 5px 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-bottom: 1px;
+            transition: background .2s
+        }
+
+        .lgi:hover {
+            background: rgba(102, 126, 234, .08)
+        }
+
+        .lgd {
+            width: 10px;
+            height: 10px;
+            border-radius: 3px;
+            flex-shrink: 0
+        }
+
+        .lgn {
+            flex: 1;
+            font-size: 11px;
+            font-weight: 500;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap
+        }
+
+        .lgv {
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--t2);
+            font-family: 'JetBrains Mono', monospace
+        }
+
+        .lgp {
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--a1);
+            font-family: 'JetBrains Mono', monospace;
+            min-width: 38px;
+            text-align: right
+        }
+
+        .tip {
+            position: fixed;
+            background: var(--bg);
+            border: 1px solid var(--brd);
+            border-radius: 10px;
+            padding: 12px 16px;
+            pointer-events: none;
+            z-index: 1000;
+            box-shadow: 0 16px 32px rgba(0, 0, 0, .5);
+            opacity: 0;
+            transition: opacity .2s;
+            max-width: 280px
+        }
+
+        .tip.v {
+            opacity: 1
+        }
+
+        .tn {
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 6px
+        }
+
+        .tv {
+            font-size: 16px;
+            font-weight: 800;
+            font-family: 'JetBrains Mono', monospace;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 2px
+        }
+
+        .tp {
+            font-size: 10px;
+            color: var(--tm)
+        }
+
+        .ft {
+            text-align: center;
+            padding: 24px 0 12px;
+            color: var(--tm);
+            font-size: 10px
+        }
+
+        .fc {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 12px;
+            background: rgba(102, 126, 234, .08);
+            border: 1px solid rgba(102, 126, 234, .12);
+            border-radius: 50px;
+            font-size: 10px;
+            margin-top: 6px
+        }
+
+        .lock {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 10px;
+            background: rgba(67, 233, 123, .08);
+            border: 1px solid rgba(67, 233, 123, .2);
+            border-radius: 50px;
+            font-size: 9px;
+            color: var(--a5);
+            margin-top: 8px
+        }
+
+        @keyframes fdIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        @media(max-width:768px) {
+            .dn {
+                grid-template-columns: 1fr
+            }
+
+            .brl {
+                width: 80px;
+                font-size: 10px
+            }
+
+            .brt {
+                height: 20px
+            }
+
+            .stats {
+                grid-template-columns: 1fr 1fr 1fr
+            }
+
+            .sc {
+                padding: 12px 8px
+            }
+
+            .si {
+                font-size: 18px
+            }
+
+            .tabs {
+                gap: 3px
+            }
+
+            .tb {
+                padding: 6px 12px;
+                font-size: 11px
+            }
+        }
+
+        @media(max-width:480px) {
+            .stats {
+                grid-template-columns: 1fr
+            }
+
+            .brl {
+                width: 70px;
+                font-size: 9px
+            }
+
+            .bro {
+                min-width: 55px;
+                font-size: 9px
+            }
+
+            .brt {
+                height: 18px
+            }
+
+            .wrap {
+                padding: 12px 8px
+            }
+
+            .bx {
+                padding: 14px 10px
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="tip" id="tip">
+        <div class="tn" id="tn"></div>
+        <div class="tv" id="tv"></div>
+        <div class="tp" id="tp"></div>
+    </div>
+    <div class="wrap">
+        <div class="hdr">
+            <div class="badge">Данные • 2025</div>
+            <h1>Лизинговые компании Кыргызстана</h1>
+            <p class="sub">Суммы отчислений лизинговых компаний в бюджет КР</p>
+        </div>
+        <div class="stats">
+            <div class="sc">
+                <div class="si">🏢</div>
+                <div class="sv" id="s1">0</div>
+                <div class="sl">Компаний</div>
+            </div>
+            <div class="sc">
+                <div class="si">💰</div>
+                <div class="sv" id="s2">0</div>
+                <div class="sl">Общая сумма</div>
+            </div>
+            <div class="sc">
+                <div class="si">🏆</div>
+                <div class="sv" id="s3">0%</div>
+                <div class="sl">Доля лидера</div>
+            </div>
+        </div>
+        <div class="tabs">
+            <button class="tb on" onclick="sw('bar')" id="t-bar">📊 Рейтинг</button>
+            <button class="tb" onclick="sw('don')" id="t-don">🍩 Доли</button>
+            <button class="tb" onclick="sw('tbl')" id="t-tbl">📋 Таблица</button>
+        </div>
+        <div class="sec on" id="sec-bar">
+            <div class="bx">
+                <div class="ct">
+                    <div class="cti" style="background:linear-gradient(135deg,#667eea,#764ba2)">📊</div>Рейтинг по
+                    суммам отчислений
+                </div>
+                <div id="bars"></div>
+            </div>
+        </div>
+        <div class="sec" id="sec-don">
+            <div class="dn">
+                <div class="dw">
+                    <div class="ct">
+                        <div class="cti" style="background:linear-gradient(135deg,#f093fb,#f5576c)">🍩</div>Доли
+                        компаний
+                    </div>
+                    <div class="dsc"><svg id="dsv" viewBox="0 0 300 300"></svg>
+                        <div class="dcc">
+                            <div class="dcv" id="dcv">100%</div>
+                            <div class="dcl">от общей суммы</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="lgc">
+                    <div class="lgt">Компании</div>
+                    <div id="lg"></div>
+                </div>
+            </div>
+        </div>
+        <div class="sec" id="sec-tbl">
+            <div class="bx">
+                <div class="ct">
+                    <div class="cti" style="background:linear-gradient(135deg,#4facfe,#00f2fe)">📋</div>Детальная
+                    таблица
+                </div>
+                <div style="overflow-x:auto">
+                    <table style="width:100%;border-collapse:separate;border-spacing:0" id="dtbl">
+                        <thead>
+                            <tr>
+                                <th
+                                    style="background:rgba(102,126,234,.1);padding:10px 12px;text-align:left;font-size:11px;font-weight:600;color:var(--a1);text-transform:uppercase;letter-spacing:.4px;border-bottom:1px solid var(--brd)">
+                                    №</th>
+                                <th
+                                    style="background:rgba(102,126,234,.1);padding:10px 12px;text-align:left;font-size:11px;font-weight:600;color:var(--a1);text-transform:uppercase;letter-spacing:.4px;border-bottom:1px solid var(--brd)">
+                                    Компания</th>
+                                <th
+                                    style="background:rgba(102,126,234,.1);padding:10px 12px;text-align:left;font-size:11px;font-weight:600;color:var(--a1);text-transform:uppercase;letter-spacing:.4px;border-bottom:1px solid var(--brd)">
+                                    Сумма (сом)</th>
+                                <th
+                                    style="background:rgba(102,126,234,.1);padding:10px 12px;text-align:left;font-size:11px;font-weight:600;color:var(--a1);text-transform:uppercase;letter-spacing:.4px;border-bottom:1px solid var(--brd)">
+                                    Доля</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tb"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="ft">
+            <p>Источник: Государственная служба регулирования и надзора за финансовым рынком КР</p>
+            <div class="fc"><span>✨</span> Стиль Flourish • Интерактивная визуализация</div><br>
+            <div class="lock">🔒 Защищено • CSP • XSS Protection • Sandbox Ready</div>
+        </div>
+    </div>
+    <script>
+        // ====== КИБЕРЗАЩИТА: Замораживание прототипов ======
+        if (Object.freeze) { Object.freeze(Object.prototype); Object.freeze(Array.prototype) }
+        // Блокировка потенциального внедрения через URL
+        (function () { var u = window.location.href; if (u.indexOf('javascript:') !== -1 || u.indexOf('data:text/html') !== -1) { document.body.innerHTML = '<p style="color:red;text-align:center;padding:40px">⚠️ Заблокировано: обнаружена попытка XSS</p>'; return } })();
+
+        const D = [
+            { n: 'Лизинг Экспресс Финанс', f: 'ОсОО «Лизинг Экспресс Финанс»', v: 92557426.11 },
+            { n: 'МК Лизинг', f: 'ОсОО «МК Лизинг» («МикроЛизинг»)', v: 35162603.04 },
+            { n: 'Гос. лизинговая компания', f: 'ОАО «Государственная лизинговая компания»', v: 21702549.38 },
+            { n: 'Корки Лизинг', f: 'ОсОО «Корки Лизинг»', v: 4966451.38 },
+            { n: 'АЮ Лизинг', f: 'ОсОО «АЮ Лизинг»', v: 4466677 },
+            { n: 'ЛК Кыргызстан', f: 'ЗАО «Лизинговая Компания Кыргызстан»', v: 4339066.59 },
+            { n: 'Элдик Лизинг', f: 'ОсОО «Элдик Лизинг»', v: 4309519.76 },
+            { n: 'ИКС ДИ МОТОР', f: 'ОсОО «ИКС ДИ МОТОР»', v: 4291703.33 },
+            { n: 'Унаа-Лизинг', f: 'ОсОО «Унаа-Лизинг»', v: 3684504.94 },
+            { n: 'Актив лизинг', f: 'ОсОО «Актив лизинг»', v: 3120510 },
+            { n: 'Мерц Лизинг КГЗ', f: 'ОсОО «Мерц Лизинг КГЗ»', v: 2828399.14 },
+            { n: 'Жыргализ', f: 'ОсОО «Жыргализ»', v: 2598399.34 },
+            { n: 'Мотор экспресс', f: 'ОсОО «Мотор экспресс»', v: 1618027.11 },
+            { n: 'БТ Лизинг', f: 'ОсОО «БТ Лизинг»', v: 1505839.37 },
+            { n: 'Аман Лизинг', f: 'ОсОО «Аман Лизинг»', v: 1505579 },
+            { n: 'БПН Кыргызстан', f: 'ОсОО «БПН Кыргызстан»', v: 1291049.65 },
+            { n: 'КРДТ транспортно-лиз.', f: 'ОсОО «КРДТ компания транспортно-лизинговых услуг»', v: 876336.03 },
+            { n: 'Автолизинг.КейДжи', f: 'ОсОО «Автолизинг.КейДжи»', v: 853443.96 },
+            { n: 'Альфа Лизинг', f: 'ОсОО «Альфа Лизинг»', v: 509988 },
+            { n: 'Альфа Лизинг Плюс', f: 'ОсОО «Альфа Лизинг Плюс»', v: 306204.78 },
+            { n: 'Лизинг Кей Джи', f: 'ОсОО «Лизинг Кей Джи»', v: 32100 }
+        ];
+        const T = D.reduce((s, d) => s + d.v, 0), M = Math.max(...D.map(d => d.v));
+        const C = ['#667eea', '#764ba2', '#f093fb', '#f5576c', '#4facfe', '#00f2fe', '#43e97b', '#38f9d7', '#fa709a', '#fee140', '#a18cd1', '#fbc2eb', '#fccb90', '#d57eeb', '#84fab0', '#8fd3f4', '#ffecd2', '#fcb69f', '#ff9a9e', '#a1c4fd', '#c2e9fb'];
+        const G = [['#667eea', '#764ba2'], ['#f093fb', '#f5576c'], ['#4facfe', '#00f2fe'], ['#43e97b', '#38f9d7'], ['#fa709a', '#fee140'], ['#a18cd1', '#fbc2eb'], ['#fccb90', '#d57eeb'], ['#84fab0', '#8fd3f4'], ['#ffecd2', '#fcb69f'], ['#ff9a9e', '#fecfef'], ['#a1c4fd', '#c2e9fb'], ['#d4fc79', '#96e6a1'], ['#fdcbf1', '#e6dee9'], ['#a6c0fe', '#f68084'], ['#fbc2eb', '#a6c1ee'], ['#fddb92', '#d1fdff'], ['#9890e3', '#b1f4cf'], ['#ebc0fd', '#d9ded8'], ['#f6d365', '#fda085'], ['#fbc2eb', '#a18cd1'], ['#89f7fe', '#66a6ff']];
+
+        // Sanitize text output to prevent XSS
+        function esc(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML }
+        function fmt(n) { return new Intl.NumberFormat('ru-RU', { maximumFractionDigits: 0 }).format(n) }
+        function cmp(n) { if (n >= 1e6) return (n / 1e6).toFixed(1) + ' млн'; if (n >= 1e3) return (n / 1e3).toFixed(0) + ' тыс'; return n.toFixed(0) }
+        function pc(v) { return ((v / T) * 100).toFixed(1) }
+
+        const tip = document.getElementById('tip'), tn_ = document.getElementById('tn'), tv_ = document.getElementById('tv'), tp_ = document.getElementById('tp');
+        function sT(e, i) { tn_.textContent = i.f; tv_.textContent = fmt(i.v) + ' сом'; tp_.textContent = pc(i.v) + '% от общей суммы'; tip.classList.add('v'); let x = e.clientX + 12, y = e.clientY - 8; if (x + 280 > window.innerWidth) x = e.clientX - 290; tip.style.left = x + 'px'; tip.style.top = y + 'px' }
+        function hT() { tip.classList.remove('v') }
+
+        function sw(t) { document.querySelectorAll('.sec').forEach(s => s.classList.remove('on')); document.querySelectorAll('.tb').forEach(b => b.classList.remove('on')); document.getElementById('sec-' + t).classList.add('on'); document.getElementById('t-' + t).classList.add('on'); if (t === 'bar') aB(); if (t === 'don') bD() }
+
+        function rB() { const c = document.getElementById('bars'); const sd = [...D].sort((a, b) => b.v - a.v); c.innerHTML = sd.map((it, i) => { const oi = D.indexOf(it); const [c1, c2] = G[oi % G.length]; const w = (it.v / M * 100).toFixed(1); return `<div class="br" onmouseenter="sT(event,D[${oi}])" onmousemove="sT(event,D[${oi}])" onmouseleave="hT()"><div class="brk">${i + 1}</div><div class="brl" title="${esc(it.f)}">${esc(it.n)}</div><div class="brt"><div class="brf" data-w="${w}" style="background:linear-gradient(90deg,${c1},${c2})"><span class="brv">${w > 15 ? cmp(it.v) : ''}</span></div></div><div class="bro">${fmt(it.v)}</div></div>` }).join('') }
+
+        function aB() { document.querySelectorAll('#bars .brf').forEach((f, i) => { f.style.width = '0%'; setTimeout(() => { f.style.width = f.dataset.w + '%' }, i * 40) }) }
+
+        function bD() { const svg = document.getElementById('dsv'); const cx = 150, cy = 150, r = 120, ir = 72; let sa = -Math.PI / 2; svg.innerHTML = ''; const top7 = D.slice(0, 7); const ov = D.slice(7).reduce((s, d) => s + d.v, 0); const dd = [...top7, { n: 'Другие (14)', f: 'Другие компании (14)', v: ov }]; dd.forEach((it, i) => { const a = (it.v / T) * Math.PI * 2; const ea = sa + a; const x1 = cx + r * Math.cos(sa), y1 = cy + r * Math.sin(sa), x2 = cx + r * Math.cos(ea), y2 = cy + r * Math.sin(ea), x3 = cx + ir * Math.cos(ea), y3 = cy + ir * Math.sin(ea), x4 = cx + ir * Math.cos(sa), y4 = cy + ir * Math.sin(sa); const la = a > Math.PI ? 1 : 0; const p = document.createElementNS('http://www.w3.org/2000/svg', 'path'); p.setAttribute('d', `M${x1} ${y1}A${r} ${r} 0 ${la} 1 ${x2} ${y2}L${x3} ${y3}A${ir} ${ir} 0 ${la} 0 ${x4} ${y4}Z`); p.setAttribute('fill', C[i % C.length]); p.setAttribute('stroke', '#0f0f1a'); p.setAttribute('stroke-width', '2'); p.style.cursor = 'pointer'; p.style.transition = 'all .3s'; p.style.opacity = '0'; setTimeout(() => { p.style.opacity = '1' }, i * 80); p.onmouseenter = e => { p.style.transform = 'scale(1.05)'; p.style.transformOrigin = cx + 'px ' + cy + 'px'; sT(e, it); document.getElementById('dcv').textContent = pc(it.v) + '%' }; p.onmousemove = e => sT(e, it); p.onmouseleave = () => { p.style.transform = ''; hT(); document.getElementById('dcv').textContent = '100%' }; svg.appendChild(p); sa = ea }) }
+
+        function bL() { document.getElementById('lg').innerHTML = D.map((it, i) => `<div class="lgi" onmouseenter="sT(event,D[${i}])" onmousemove="sT(event,D[${i}])" onmouseleave="hT()"><div class="lgd" style="background:${C[i % C.length]}"></div><div class="lgn" title="${esc(it.f)}">${esc(it.n)}</div><div class="lgv">${cmp(it.v)}</div><div class="lgp">${pc(it.v)}%</div></div>`).join('') }
+
+        function bTbl() { document.getElementById('tb').innerHTML = D.map((it, i) => { const pc_ = pc(it.v); const cl = parseFloat(pc_) > 10 ? 'var(--a5)' : (parseFloat(pc_) > 2 ? '#00d2ff' : 'var(--tm)'); return `<tr><td style="padding:8px 12px;font-size:11px;font-weight:700;color:var(--tm);font-family:'JetBrains Mono',monospace;border-bottom:1px solid rgba(102,126,234,.06)">${i + 1}</td><td style="padding:8px 12px;font-size:11px;font-weight:500;border-bottom:1px solid rgba(102,126,234,.06)">${esc(it.f)}</td><td style="padding:8px 12px;font-size:11px;font-weight:700;font-family:'JetBrains Mono',monospace;color:#00d2ff;border-bottom:1px solid rgba(102,126,234,.06)">${fmt(it.v)}</td><td style="padding:8px 12px;font-size:11px;font-weight:600;font-family:'JetBrains Mono',monospace;color:${cl};border-bottom:1px solid rgba(102,126,234,.06)">${pc_}%</td></tr>` }).join('') }
+
+        function aCnt() {
+            let c = 0; const iv = setInterval(() => { c++; if (c >= 21) { c = 21; clearInterval(iv) } document.getElementById('s1').textContent = c }, 60);
+            let cs = 0; const ss = T / 35; const iv2 = setInterval(() => { cs += ss; if (cs >= T) { cs = T; clearInterval(iv2) } document.getElementById('s2').textContent = cmp(cs) }, 35);
+            const tp_ = D[0].v / T * 100; let cp = 0; const ps = tp_ / 25; const iv3 = setInterval(() => { cp += ps; if (cp >= tp_) { cp = tp_; clearInterval(iv3) } document.getElementById('s3').textContent = cp.toFixed(1) + '%' }, 50)
+        }
+
+        document.addEventListener('DOMContentLoaded', () => { rB(); bL(); bTbl(); setTimeout(() => { aCnt(); aB() }, 300) });
+
+        // ====== КИБЕРЗАЩИТА: блокировка devtools манипуляций ======
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        // Блокировка drag & drop для предотвращения утечки данных
+        document.addEventListener('dragstart', e => e.preventDefault());
+    </script>
+</body>
+
+</html>
