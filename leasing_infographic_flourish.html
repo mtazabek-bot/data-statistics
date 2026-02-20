@@ -1,0 +1,1469 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лизинговые компании Кыргызстана — Суммы отчислений</title>
+    <meta name="description"
+        content="Интерактивная инфографика: суммы отчислений лизинговых компаний Кыргызстана в стиле Flourish">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0f0f1a;
+            --bg-secondary: #1a1a2e;
+            --bg-card: #16213e;
+            --bg-card-hover: #1a2744;
+            --text-primary: #e8e8f0;
+            --text-secondary: #a0a0c0;
+            --text-muted: #6a6a8e;
+            --accent-1: #667eea;
+            --accent-2: #764ba2;
+            --accent-3: #f093fb;
+            --accent-4: #00d2ff;
+            --accent-5: #43e97b;
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --gradient-4: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            --gradient-5: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            --gradient-6: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
+            --gradient-7: linear-gradient(135deg, #fccb90 0%, #d57eeb 100%);
+            --border-color: rgba(102, 126, 234, 0.15);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            --shadow-glow: 0 0 40px rgba(102, 126, 234, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .bg-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.08;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .bg-orb:nth-child(1) {
+            width: 600px;
+            height: 600px;
+            background: var(--accent-1);
+            top: -200px;
+            left: -100px;
+            animation-delay: 0s;
+        }
+
+        .bg-orb:nth-child(2) {
+            width: 500px;
+            height: 500px;
+            background: var(--accent-3);
+            top: 50%;
+            right: -150px;
+            animation-delay: -7s;
+        }
+
+        .bg-orb:nth-child(3) {
+            width: 400px;
+            height: 400px;
+            background: var(--accent-5);
+            bottom: -100px;
+            left: 30%;
+            animation-delay: -14s;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            25% {
+                transform: translate(50px, -30px) scale(1.1);
+            }
+
+            50% {
+                transform: translate(-30px, 50px) scale(0.9);
+            }
+
+            75% {
+                transform: translate(30px, 30px) scale(1.05);
+            }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        /* Header Section */
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .header-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            background: rgba(102, 126, 234, 0.1);
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--accent-1);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .header-badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--accent-5);
+            border-radius: 50%;
+            animation: pulse-dot 2s infinite;
+        }
+
+        @keyframes pulse-dot {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.5;
+                transform: scale(1.5);
+            }
+        }
+
+        h1 {
+            font-size: clamp(28px, 5vw, 52px);
+            font-weight: 800;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+            margin-bottom: 16px;
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            font-size: clamp(14px, 2.5vw, 18px);
+            color: var(--text-secondary);
+            font-weight: 300;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Stats Cards Row */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            margin-bottom: 40px;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            border-radius: 16px 16px 0 0;
+        }
+
+        .stat-card:nth-child(1)::before {
+            background: var(--gradient-1);
+        }
+
+        .stat-card:nth-child(2)::before {
+            background: var(--gradient-4);
+        }
+
+        .stat-card:nth-child(3)::before {
+            background: var(--gradient-5);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-glow);
+            border-color: rgba(102, 126, 234, 0.3);
+        }
+
+        .stat-icon {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .stat-value {
+            font-size: clamp(22px, 3vw, 32px);
+            font-weight: 800;
+            font-family: 'JetBrains Mono', monospace;
+            margin-bottom: 4px;
+        }
+
+        .stat-card:nth-child(1) .stat-value {
+            color: var(--accent-1);
+        }
+
+        .stat-card:nth-child(2) .stat-value {
+            color: var(--accent-5);
+        }
+
+        .stat-card:nth-child(3) .stat-value {
+            color: #fa709a;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Tabs */
+        .tabs-container {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+
+        .tab-btn {
+            padding: 10px 24px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            border-radius: 50px;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn:hover {
+            border-color: var(--accent-1);
+            color: var(--text-primary);
+        }
+
+        .tab-btn.active {
+            background: var(--gradient-1);
+            border-color: transparent;
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Chart Sections */
+        .chart-section {
+            display: none;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .chart-section.active {
+            display: block;
+        }
+
+        /* Bar Chart - Racing Style */
+        .bar-chart-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .chart-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .chart-title-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .bar-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            padding: 6px 0;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-radius: 8px;
+        }
+
+        .bar-row:hover {
+            background: rgba(102, 126, 234, 0.05);
+            padding-left: 8px;
+        }
+
+        .bar-rank {
+            width: 28px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-align: center;
+            flex-shrink: 0;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .bar-label {
+            width: 230px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-primary);
+            padding-right: 12px;
+            flex-shrink: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .bar-track {
+            flex: 1;
+            height: 32px;
+            background: rgba(102, 126, 234, 0.05);
+            border-radius: 6px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            height: 100%;
+            border-radius: 6px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 10px;
+            width: 0;
+            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .bar-fill.animated {
+            /* width set by JS */
+        }
+
+        .bar-value {
+            font-size: 11px;
+            font-weight: 600;
+            color: #fff;
+            font-family: 'JetBrains Mono', monospace;
+            white-space: nowrap;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        .bar-value-outside {
+            margin-left: 10px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            font-family: 'JetBrains Mono', monospace;
+            white-space: nowrap;
+            flex-shrink: 0;
+            min-width: 100px;
+        }
+
+        /* Tooltip */
+        .tooltip {
+            position: fixed;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px 20px;
+            pointer-events: none;
+            z-index: 1000;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            max-width: 320px;
+        }
+
+        .tooltip.visible {
+            opacity: 1;
+        }
+
+        .tooltip-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .tooltip-value {
+            font-size: 20px;
+            font-weight: 800;
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 4px;
+        }
+
+        .tooltip-percent {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        /* Donut Chart */
+        .donut-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        .donut-chart-wrap {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .donut-svg-container {
+            position: relative;
+            width: 320px;
+            height: 320px;
+        }
+
+        .donut-center-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .donut-center-value {
+            font-size: 18px;
+            font-weight: 800;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-primary);
+        }
+
+        .donut-center-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        /* Legend */
+        .legend-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 24px;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .legend-container::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .legend-container::-webkit-scrollbar-thumb {
+            background: var(--accent-1);
+            border-radius: 4px;
+        }
+
+        .legend-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 10px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            margin-bottom: 2px;
+        }
+
+        .legend-item:hover {
+            background: rgba(102, 126, 234, 0.08);
+        }
+
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+
+        .legend-name {
+            flex: 1;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-primary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .legend-value {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .legend-pct {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--accent-1);
+            font-family: 'JetBrains Mono', monospace;
+            min-width: 45px;
+            text-align: right;
+        }
+
+        /* Table Section */
+        .table-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 30px;
+            overflow-x: auto;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        .data-table thead th {
+            background: rgba(102, 126, 234, 0.1);
+            padding: 14px 16px;
+            text-align: left;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--accent-1);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .data-table thead th:first-child {
+            border-radius: 10px 0 0 0;
+        }
+
+        .data-table thead th:last-child {
+            border-radius: 0 10px 0 0;
+        }
+
+        .data-table tbody td {
+            padding: 12px 16px;
+            font-size: 13px;
+            border-bottom: 1px solid rgba(102, 126, 234, 0.06);
+            transition: all 0.2s ease;
+        }
+
+        .data-table tbody tr:hover td {
+            background: rgba(102, 126, 234, 0.04);
+        }
+
+        .data-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .td-rank {
+            font-weight: 700;
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+            width: 40px;
+        }
+
+        .td-name {
+            font-weight: 500;
+        }
+
+        .td-value {
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--accent-4);
+        }
+
+        .td-percent {
+            font-weight: 600;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .td-bar {
+            width: 200px;
+        }
+
+        .mini-bar {
+            height: 6px;
+            border-radius: 3px;
+            background: rgba(102, 126, 234, 0.1);
+            overflow: hidden;
+        }
+
+        .mini-bar-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Treemap Section */
+        .treemap-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 30px;
+        }
+
+        .treemap {
+            display: grid;
+            gap: 4px;
+            min-height: 450px;
+        }
+
+        .treemap-cell {
+            border-radius: 8px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .treemap-cell:hover {
+            transform: scale(1.02);
+            z-index: 2;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+
+        .treemap-cell-name {
+            font-size: 11px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.3;
+            word-break: break-word;
+        }
+
+        .treemap-cell-value {
+            font-size: 10px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.7);
+            font-family: 'JetBrains Mono', monospace;
+            margin-top: 4px;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px 0 20px;
+            color: var(--text-muted);
+            font-size: 12px;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .footer a {
+            color: var(--accent-1);
+            text-decoration: none;
+        }
+
+        .flourish-credit {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            background: rgba(102, 126, 234, 0.08);
+            border: 1px solid rgba(102, 126, 234, 0.15);
+            border-radius: 50px;
+            font-size: 11px;
+            margin-top: 10px;
+            color: var(--text-muted);
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Counter Animation */
+        .counter-animate {
+            display: inline-block;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .donut-section {
+                grid-template-columns: 1fr;
+            }
+
+            .bar-label {
+                width: 150px;
+                font-size: 11px;
+            }
+
+            .bar-value-outside {
+                min-width: 80px;
+                font-size: 11px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 16px 12px;
+            }
+
+            .bar-chart-container {
+                padding: 16px;
+            }
+
+            .bar-label {
+                width: 100px;
+                font-size: 10px;
+            }
+
+            .bar-track {
+                height: 24px;
+            }
+
+            .bar-value {
+                font-size: 9px;
+            }
+
+            .bar-value-outside {
+                font-size: 10px;
+                min-width: 70px;
+            }
+
+            .donut-svg-container {
+                width: 260px;
+                height: 260px;
+            }
+
+            .stats-row {
+                grid-template-columns: 1fr;
+            }
+
+            .tabs-container {
+                gap: 4px;
+            }
+
+            .tab-btn {
+                padding: 8px 14px;
+                font-size: 12px;
+            }
+
+            .td-bar {
+                display: none;
+            }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-1);
+            border-radius: 3px;
+        }
+
+        /* Sort Controls */
+        .sort-controls {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .sort-btn {
+            padding: 6px 14px;
+            border: 1px solid var(--border-color);
+            background: transparent;
+            color: var(--text-muted);
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .sort-btn.active {
+            background: rgba(102, 126, 234, 0.15);
+            border-color: var(--accent-1);
+            color: var(--accent-1);
+        }
+
+        .sort-btn:hover {
+            border-color: var(--accent-1);
+        }
+
+        /* Search */
+        .search-box {
+            width: 100%;
+            padding: 10px 16px 10px 42px;
+            background: rgba(102, 126, 234, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .search-box:focus {
+            border-color: var(--accent-1);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .search-wrapper {
+            position: relative;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 16px;
+            margin-top: -10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="bg-animation">
+        <div class="bg-orb"></div>
+        <div class="bg-orb"></div>
+        <div class="bg-orb"></div>
+    </div>
+
+    <div class="tooltip" id="tooltip">
+        <div class="tooltip-name" id="tooltip-name"></div>
+        <div class="tooltip-value" id="tooltip-value"></div>
+        <div class="tooltip-percent" id="tooltip-percent"></div>
+    </div>
+
+    <div class="container">
+
+        <!-- Header -->
+        <div class="header">
+            <div class="header-badge">Данные • 2025</div>
+            <h1>Лизинговые компании<br>Кыргызстана</h1>
+            <p class="subtitle">Суммы отчислений лизинговых компаний в бюджет Кыргызской Республики</p>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats-row">
+            <div class="stat-card">
+                <div class="stat-icon">🏢</div>
+                <div class="stat-value counter-animate" data-target="21">0</div>
+                <div class="stat-label">Компаний</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">💰</div>
+                <div class="stat-value" id="total-sum-stat">0</div>
+                <div class="stat-label">Общая сумма (сом)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🏆</div>
+                <div class="stat-value" id="top-company-pct">0%</div>
+                <div class="stat-label">Доля лидера</div>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs-container">
+            <button class="tab-btn active" onclick="switchTab('bar')" id="tab-bar">📊 Рейтинг</button>
+            <button class="tab-btn" onclick="switchTab('donut')" id="tab-donut">🍩 Доли</button>
+            <button class="tab-btn" onclick="switchTab('treemap')" id="tab-treemap">🗺️ Карта</button>
+            <button class="tab-btn" onclick="switchTab('table')" id="tab-table">📋 Таблица</button>
+        </div>
+
+        <!-- Bar Chart Section -->
+        <div class="chart-section active" id="section-bar">
+            <div class="bar-chart-container">
+                <div class="chart-title">
+                    <div class="chart-title-icon" style="background: var(--gradient-1);">📊</div>
+                    Рейтинг по суммам отчислений
+                </div>
+                <div class="sort-controls">
+                    <button class="sort-btn active" onclick="sortBars('desc')" id="sort-desc">▼ По убыванию</button>
+                    <button class="sort-btn" onclick="sortBars('asc')" id="sort-asc">▲ По возрастанию</button>
+                    <button class="sort-btn" onclick="sortBars('alpha')" id="sort-alpha">А-Я По имени</button>
+                </div>
+                <div id="bar-chart"></div>
+            </div>
+        </div>
+
+        <!-- Donut Chart Section -->
+        <div class="chart-section" id="section-donut">
+            <div class="donut-section">
+                <div class="donut-chart-wrap">
+                    <div class="chart-title">
+                        <div class="chart-title-icon" style="background: var(--gradient-2);">🍩</div>
+                        Доли компаний
+                    </div>
+                    <div class="donut-svg-container">
+                        <svg id="donut-svg" viewBox="0 0 320 320"></svg>
+                        <div class="donut-center-text">
+                            <div class="donut-center-value" id="donut-center-value">100%</div>
+                            <div class="donut-center-label">от общей суммы</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="legend-container">
+                    <div class="legend-title">Компании</div>
+                    <div id="legend-list"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Treemap Section -->
+        <div class="chart-section" id="section-treemap">
+            <div class="treemap-container">
+                <div class="chart-title">
+                    <div class="chart-title-icon" style="background: var(--gradient-4);">🗺️</div>
+                    Карта отчислений (Treemap)
+                </div>
+                <div class="treemap" id="treemap"></div>
+            </div>
+        </div>
+
+        <!-- Table Section -->
+        <div class="chart-section" id="section-table">
+            <div class="table-container">
+                <div class="chart-title">
+                    <div class="chart-title-icon" style="background: var(--gradient-3);">📋</div>
+                    Детальная таблица
+                </div>
+                <div class="search-wrapper">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" class="search-box" id="table-search" placeholder="Поиск по названию компании..."
+                        oninput="filterTable()">
+                </div>
+                <table class="data-table" id="data-table">
+                    <thead>
+                        <tr>
+                            <th>№</th>
+                            <th>Компания</th>
+                            <th>Сумма (сом)</th>
+                            <th>Доля %</th>
+                            <th>Визуализация</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>Источник данных: Государственная служба регулирования и надзора за финансовым рынком КР</p>
+            <div class="flourish-credit">
+                <span>✨</span> Создано в стиле Flourish • Интерактивная визуализация данных
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // =========== DATA ===========
+        const rawData = [
+            { name: 'Лизинг Экспресс Финанс', fullName: 'ОсОО «Лизинг Экспресс Финанс»', value: 92557426.11 },
+            { name: 'МК Лизинг', fullName: 'ОсОО «МК Лизинг» («МикроЛизинг»)', value: 35162603.04 },
+            { name: 'Гос. лизинговая компания', fullName: 'ОАО «Государственная лизинговая компания»', value: 21702549.38 },
+            { name: 'Корки Лизинг', fullName: 'ОсОО «Корки Лизинг»', value: 4966451.38 },
+            { name: 'АЮ Лизинг', fullName: 'ОсОО «АЮ Лизинг»', value: 4466677 },
+            { name: 'ЛК Кыргызстан', fullName: 'ЗАО «Лизинговая Компания Кыргызстан»', value: 4339066.59 },
+            { name: 'Элдик Лизинг', fullName: 'ОсОО «Элдик Лизинг»', value: 4309519.76 },
+            { name: 'ИКС ДИ МОТОР', fullName: 'ОсОО «ИКС ДИ МОТОР»', value: 4291703.33 },
+            { name: 'Унаа-Лизинг', fullName: 'ОсОО «Унаа-Лизинг»', value: 3684504.94 },
+            { name: 'Актив лизинг', fullName: 'ОсОО «Актив лизинг»', value: 3120510 },
+            { name: 'Мерц Лизинг КГЗ', fullName: 'ОсОО «Мерц Лизинг КГЗ»', value: 2828399.14 },
+            { name: 'Жыргализ', fullName: 'ОсОО «Жыргализ»', value: 2598399.34 },
+            { name: 'Мотор экспресс', fullName: 'ОсОО «Мотор экспресс»', value: 1618027.11 },
+            { name: 'БТ Лизинг', fullName: 'ОсОО «БТ Лизинг»', value: 1505839.37 },
+            { name: 'Аман Лизинг', fullName: 'ОсОО «Аман Лизинг»', value: 1505579 },
+            { name: 'БПН Кыргызстан', fullName: 'ОсОО «БПН Кыргызстан»', value: 1291049.65 },
+            { name: 'КРДТ транспортно-лизинговая', fullName: 'ОсОО «КРДТ компания транспортно-лизинговых услуг»', value: 876336.03 },
+            { name: 'Автолизинг.КейДжи', fullName: 'ОсОО «Автолизинг.КейДжи»', value: 853443.96 },
+            { name: 'Альфа Лизинг', fullName: 'ОсОО «Альфа Лизинг»', value: 509988 },
+            { name: 'Альфа Лизинг Плюс', fullName: 'ОсОО «Альфа Лизинг Плюс»', value: 306204.78 },
+            { name: 'Лизинг Кей Джи', fullName: 'ОсОО «Лизинг Кей Джи»', value: 32100 },
+        ];
+
+        const totalSum = rawData.reduce((s, d) => s + d.value, 0);
+        const maxVal = Math.max(...rawData.map(d => d.value));
+
+        // Colors palette (Flourish-inspired)
+        const colors = [
+            '#667eea', '#764ba2', '#f093fb', '#f5576c', '#4facfe',
+            '#00f2fe', '#43e97b', '#38f9d7', '#fa709a', '#fee140',
+            '#a18cd1', '#fbc2eb', '#fccb90', '#d57eeb', '#84fab0',
+            '#8fd3f4', '#ffecd2', '#fcb69f', '#ff9a9e', '#a1c4fd',
+            '#c2e9fb'
+        ];
+
+        const gradients = [
+            ['#667eea', '#764ba2'], ['#f093fb', '#f5576c'], ['#4facfe', '#00f2fe'],
+            ['#43e97b', '#38f9d7'], ['#fa709a', '#fee140'], ['#a18cd1', '#fbc2eb'],
+            ['#fccb90', '#d57eeb'], ['#84fab0', '#8fd3f4'], ['#ffecd2', '#fcb69f'],
+            ['#ff9a9e', '#fecfef'], ['#a1c4fd', '#c2e9fb'], ['#d4fc79', '#96e6a1'],
+            ['#fdcbf1', '#e6dee9'], ['#a6c0fe', '#f68084'], ['#fbc2eb', '#a6c1ee'],
+            ['#fddb92', '#d1fdff'], ['#9890e3', '#b1f4cf'], ['#ebc0fd', '#d9ded8'],
+            ['#f6d365', '#fda085'], ['#fbc2eb', '#a18cd1'], ['#89f7fe', '#66a6ff']
+        ];
+
+        // =========== FORMAT HELPERS ===========
+        function formatNumber(n) {
+            return new Intl.NumberFormat('ru-RU', { maximumFractionDigits: 0 }).format(n);
+        }
+
+        function formatCompact(n) {
+            if (n >= 1e6) return (n / 1e6).toFixed(1) + ' млн';
+            if (n >= 1e3) return (n / 1e3).toFixed(0) + ' тыс';
+            return n.toFixed(0);
+        }
+
+        function pct(v) {
+            return ((v / totalSum) * 100).toFixed(1);
+        }
+
+        // =========== TABS ===========
+        function switchTab(tab) {
+            document.querySelectorAll('.chart-section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('section-' + tab).classList.add('active');
+            document.getElementById('tab-' + tab).classList.add('active');
+
+            if (tab === 'bar') animateBars();
+            if (tab === 'donut') animateDonut();
+            if (tab === 'treemap') buildTreemap();
+            if (tab === 'table') animateTableBars();
+        }
+
+        // =========== TOOLTIP ===========
+        const tooltip = document.getElementById('tooltip');
+        const tooltipName = document.getElementById('tooltip-name');
+        const tooltipValue = document.getElementById('tooltip-value');
+        const tooltipPercent = document.getElementById('tooltip-percent');
+
+        function showTooltip(e, item) {
+            tooltipName.textContent = item.fullName;
+            tooltipValue.textContent = formatNumber(item.value) + ' сом';
+            tooltipPercent.textContent = pct(item.value) + '% от общей суммы';
+            tooltip.classList.add('visible');
+
+            let x = e.clientX + 15;
+            let y = e.clientY - 10;
+            const rect = tooltip.getBoundingClientRect();
+            if (x + 320 > window.innerWidth) x = e.clientX - 330;
+            if (y + rect.height > window.innerHeight) y = window.innerHeight - rect.height - 10;
+
+            tooltip.style.left = x + 'px';
+            tooltip.style.top = y + 'px';
+        }
+
+        function hideTooltip() {
+            tooltip.classList.remove('visible');
+        }
+
+        // =========== BAR CHART ===========
+        let currentSort = 'desc';
+        let sortedData = [...rawData];
+
+        function sortBars(type) {
+            currentSort = type;
+            document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('sort-' + type).classList.add('active');
+
+            if (type === 'desc') sortedData = [...rawData].sort((a, b) => b.value - a.value);
+            else if (type === 'asc') sortedData = [...rawData].sort((a, b) => a.value - b.value);
+            else sortedData = [...rawData].sort((a, b) => a.name.localeCompare(b.name, 'ru'));
+
+            renderBars();
+            setTimeout(animateBars, 50);
+        }
+
+        function renderBars() {
+            const container = document.getElementById('bar-chart');
+            container.innerHTML = sortedData.map((item, i) => {
+                const origIdx = rawData.indexOf(item);
+                const [c1, c2] = gradients[origIdx % gradients.length];
+                const w = (item.value / maxVal * 100).toFixed(1);
+                return `
+                <div class="bar-row" data-index="${origIdx}"
+                     onmouseenter="showTooltip(event, rawData[${origIdx}])"
+                     onmousemove="showTooltip(event, rawData[${origIdx}])"
+                     onmouseleave="hideTooltip()">
+                    <div class="bar-rank">${i + 1}</div>
+                    <div class="bar-label" title="${item.fullName}">${item.name}</div>
+                    <div class="bar-track">
+                        <div class="bar-fill" data-width="${w}" style="background: linear-gradient(90deg, ${c1}, ${c2});">
+                            <span class="bar-value">${w > 15 ? formatCompact(item.value) : ''}</span>
+                        </div>
+                    </div>
+                    <div class="bar-value-outside">${formatNumber(item.value)}</div>
+                </div>
+            `;
+            }).join('');
+        }
+
+        function animateBars() {
+            const fills = document.querySelectorAll('#bar-chart .bar-fill');
+            fills.forEach((fill, i) => {
+                fill.style.width = '0%';
+                setTimeout(() => {
+                    fill.style.width = fill.dataset.width + '%';
+                }, i * 50);
+            });
+        }
+
+        // =========== DONUT CHART ===========
+        function buildDonut() {
+            const svg = document.getElementById('donut-svg');
+            const cx = 160, cy = 160, r = 130, innerR = 80;
+            let startAngle = -Math.PI / 2;
+            svg.innerHTML = '';
+
+            // Top 7 + Others
+            const top = rawData.slice(0, 7);
+            const othersVal = rawData.slice(7).reduce((s, d) => s + d.value, 0);
+            const donutData = [...top, { name: 'Другие (14)', fullName: 'Другие компании (14)', value: othersVal }];
+
+            donutData.forEach((item, i) => {
+                const angle = (item.value / totalSum) * Math.PI * 2;
+                const endAngle = startAngle + angle;
+
+                const x1 = cx + r * Math.cos(startAngle);
+                const y1 = cy + r * Math.sin(startAngle);
+                const x2 = cx + r * Math.cos(endAngle);
+                const y2 = cy + r * Math.sin(endAngle);
+                const x3 = cx + innerR * Math.cos(endAngle);
+                const y3 = cy + innerR * Math.sin(endAngle);
+                const x4 = cx + innerR * Math.cos(startAngle);
+                const y4 = cy + innerR * Math.sin(startAngle);
+
+                const largeArc = angle > Math.PI ? 1 : 0;
+
+                const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                const d = `M ${x1} ${y1} A ${r} ${r} 0 ${largeArc} 1 ${x2} ${y2} L ${x3} ${y3} A ${innerR} ${innerR} 0 ${largeArc} 0 ${x4} ${y4} Z`;
+                path.setAttribute('d', d);
+                path.setAttribute('fill', colors[i % colors.length]);
+                path.setAttribute('stroke', '#0f0f1a');
+                path.setAttribute('stroke-width', '2');
+                path.style.cursor = 'pointer';
+                path.style.transition = 'all 0.3s ease';
+                path.style.opacity = '0';
+
+                // Animate in
+                setTimeout(() => {
+                    path.style.opacity = '1';
+                }, i * 100);
+
+                path.addEventListener('mouseenter', function (e) {
+                    this.style.transform = `scale(1.05)`;
+                    this.style.transformOrigin = `${cx}px ${cy}px`;
+                    showTooltip(e, item);
+                    document.getElementById('donut-center-value').textContent = pct(item.value) + '%';
+                });
+                path.addEventListener('mousemove', function (e) {
+                    showTooltip(e, item);
+                });
+                path.addEventListener('mouseleave', function () {
+                    this.style.transform = '';
+                    hideTooltip();
+                    document.getElementById('donut-center-value').textContent = '100%';
+                });
+
+                svg.appendChild(path);
+                startAngle = endAngle;
+            });
+        }
+
+        function animateDonut() {
+            buildDonut();
+        }
+
+        function buildLegend() {
+            const list = document.getElementById('legend-list');
+            list.innerHTML = rawData.map((item, i) => `
+            <div class="legend-item" 
+                 onmouseenter="showTooltip(event, rawData[${i}])" 
+                 onmousemove="showTooltip(event, rawData[${i}])" 
+                 onmouseleave="hideTooltip()">
+                <div class="legend-color" style="background: ${colors[i % colors.length]};"></div>
+                <div class="legend-name" title="${item.fullName}">${item.name}</div>
+                <div class="legend-value">${formatCompact(item.value)}</div>
+                <div class="legend-pct">${pct(item.value)}%</div>
+            </div>
+        `).join('');
+        }
+
+        // =========== TREEMAP ===========
+        function buildTreemap() {
+            const container = document.getElementById('treemap');
+
+            // Simple treemap layout: grid-based proportional areas
+            const sorted = [...rawData].sort((a, b) => b.value - a.value);
+
+            // Use CSS grid with different spans based on value
+            let html = '';
+
+            // Large items (top 3) get bigger cells
+            sorted.forEach((item, i) => {
+                const origIdx = rawData.indexOf(item);
+                const [c1, c2] = gradients[origIdx % gradients.length];
+                const pctVal = pct(item.value);
+                const fontSize = i < 3 ? '13px' : (i < 7 ? '11px' : '10px');
+                const valueFontSize = i < 3 ? '12px' : '9px';
+
+                html += `
+                <div class="treemap-cell" 
+                     style="background: linear-gradient(135deg, ${c1}, ${c2}); grid-column: span ${i < 1 ? 4 : (i < 3 ? 2 : 1)}; grid-row: span ${i < 1 ? 2 : 1};"
+                     onmouseenter="showTooltip(event, rawData[${origIdx}])"
+                     onmousemove="showTooltip(event, rawData[${origIdx}])"
+                     onmouseleave="hideTooltip()">
+                    <div class="treemap-cell-name" style="font-size: ${fontSize};">${item.name}</div>
+                    <div class="treemap-cell-value" style="font-size: ${valueFontSize};">${pctVal}%</div>
+                </div>
+            `;
+            });
+
+            container.style.gridTemplateColumns = 'repeat(6, 1fr)';
+            container.style.gridAutoRows = '80px';
+            container.innerHTML = html;
+        }
+
+        // =========== TABLE ===========
+        function buildTable() {
+            const tbody = document.getElementById('table-body');
+            tbody.innerHTML = rawData.map((item, i) => {
+                const origIdx = i;
+                const [c1, c2] = gradients[origIdx % gradients.length];
+                const w = (item.value / maxVal * 100).toFixed(1);
+                const pctColor = parseFloat(pct(item.value)) > 10 ? 'var(--accent-5)' : (parseFloat(pct(item.value)) > 2 ? 'var(--accent-4)' : 'var(--text-muted)');
+
+                return `
+                <tr data-name="${item.name.toLowerCase()}" data-fullname="${item.fullName.toLowerCase()}">
+                    <td class="td-rank">${i + 1}</td>
+                    <td class="td-name" title="${item.fullName}">${item.fullName}</td>
+                    <td class="td-value">${formatNumber(item.value)}</td>
+                    <td class="td-percent" style="color: ${pctColor};">${pct(item.value)}%</td>
+                    <td class="td-bar">
+                        <div class="mini-bar">
+                            <div class="mini-bar-fill" data-width="${w}" style="background: linear-gradient(90deg, ${c1}, ${c2}); width: 0%;"></div>
+                        </div>
+                    </td>
+                </tr>
+            `;
+            }).join('');
+        }
+
+        function animateTableBars() {
+            const fills = document.querySelectorAll('.mini-bar-fill');
+            fills.forEach((fill, i) => {
+                setTimeout(() => {
+                    fill.style.width = fill.dataset.width + '%';
+                }, i * 40);
+            });
+        }
+
+        function filterTable() {
+            const query = document.getElementById('table-search').value.toLowerCase();
+            const rows = document.querySelectorAll('#table-body tr');
+            rows.forEach(row => {
+                const name = row.dataset.name + ' ' + row.dataset.fullname;
+                row.style.display = name.includes(query) ? '' : 'none';
+            });
+        }
+
+        // =========== COUNTER ANIMATION ===========
+        function animateCounters() {
+            // Companies count
+            const counterEl = document.querySelector('.counter-animate');
+            const target = parseInt(counterEl.dataset.target);
+            let current = 0;
+            const step = Math.ceil(target / 30);
+            const interval = setInterval(() => {
+                current += step;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(interval);
+                }
+                counterEl.textContent = current;
+            }, 50);
+
+            // Total sum
+            const totalEl = document.getElementById('total-sum-stat');
+            let currentSum = 0;
+            const sumStep = totalSum / 40;
+            const sumInterval = setInterval(() => {
+                currentSum += sumStep;
+                if (currentSum >= totalSum) {
+                    currentSum = totalSum;
+                    clearInterval(sumInterval);
+                }
+                totalEl.textContent = formatCompact(currentSum);
+            }, 40);
+
+            // Top company %
+            const topPct = (rawData[0].value / totalSum * 100);
+            const topEl = document.getElementById('top-company-pct');
+            let currentPct = 0;
+            const pctStep = topPct / 30;
+            const pctInterval = setInterval(() => {
+                currentPct += pctStep;
+                if (currentPct >= topPct) {
+                    currentPct = topPct;
+                    clearInterval(pctInterval);
+                }
+                topEl.textContent = currentPct.toFixed(1) + '%';
+            }, 50);
+        }
+
+        // =========== INIT ===========
+        document.addEventListener('DOMContentLoaded', () => {
+            sortedData = [...rawData].sort((a, b) => b.value - a.value);
+            renderBars();
+            buildLegend();
+            buildTable();
+
+            setTimeout(() => {
+                animateCounters();
+                animateBars();
+            }, 500);
+        });
+
+        // =========== INTERSECTION OBSERVER ===========
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.bar-row, .stat-card').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+
+</body>
+
+</html>
